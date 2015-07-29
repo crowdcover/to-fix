@@ -116,7 +116,7 @@ module.exports = React.createClass({
     map.zoomControl.setPosition('topright');
 
     var initialLayer = (this.state.map.baseLayer) ?
-      this.state.map.baseLayer : 'Mapbox Streets';
+      this.state.map.baseLayer : 'Mapbox Satellite';
 
     layers[initialLayer].addTo(map);
     L.control.layers(layers).addTo(map);
