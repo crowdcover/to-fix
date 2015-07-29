@@ -35,8 +35,8 @@ module.exports = React.createClass({
           <a href='#' onClick={this.toggle} className={toggleClass}>
             <span className='icon big menu'></span>
           </a>
-          <a href='/to-fix/' className='pad2x'>
-            <h1 className='inline fancy title'>to-fix</h1>
+          <a href='/' className='pad2x'>
+            <h1 className='inline fancy title'>Fix Logging Roads in OpenStreetMap</h1>
           </a>
         </nav>
         <div className='col6 truncate text-right pad1'>
