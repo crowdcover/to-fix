@@ -219,13 +219,27 @@ header .button {
   width:100%;
   z-index:2000;
   }
-  .ideditor-done {
+  .ideditor-skip {
     position:absolute;
-    right:10px;
+    right:110px;
     top:10px;
     color:#fff;
     font-weight:bold;
     }
+  .ideditor-fixed {
+     position:absolute;
+     right:10px;
+     top:10px;
+     color:#fff;
+     font-weight:bold;
+   }
+.ideditor-noterror {
+  position:absolute;
+  right:204px;
+  top:10px;
+  color:#fff;
+  font-weight:bold;
+}
 
 .leaflet-clickable {
   fill:transparent;
