@@ -187,10 +187,22 @@ module.exports = React.createClass({
     }
   },
 
-  iDEditDone: function() {
+  iDEditSkip: function() {
     // Set editor state as complete and trigger the done action
     this.setState({ iDEdit: false });
     actions.taskData(this.context.router.getCurrentParams().task);
+  },
+
+  iDEditFixed: function() {
+    // Set editor state as complete and trigger the done action
+    this.setState({ iDEdit: false });
+    actions.taskDone(this.context.router.getCurrentParams().task);
+  },
+
+  iDEditNotError: function() {
+    // Set editor state as complete and trigger the done action
+    this.setState({ iDEdit: false });
+    actions.taskNotError(this.context.router.getCurrentParams().task);
   },
 
   geolocate: function(center) {
@@ -213,7 +225,10 @@ module.exports = React.createClass({
       /* jshint ignore:start */
       <div>
         <iframe src={this.state.iDSrcAttribute} frameBorder='0' className='ideditor'></iframe>
-        <button onClick={this.iDEditDone} className='ideditor-done z10000 button rcon next round animate pad1y pad2x strong'>Next task</button>
+        <button onClick={this.iDEditNotError} className='ideditor-noterror z10000 button rcon next round animate pad1y pad2x strong'>Not an Error</button>
+        <button onClick={this.iDEditSkip} className='ideditor-skip z10000 button rcon next round animate pad1y pad2x strong'>Skip</button>
+        <button onClick={this.iDEditFixed} className='ideditor-fixed z10000 button rcon next round animate pad1y pad2x strong'>Fixed</button>
+
       </div>
       /* jshint ignore:end */
       );
