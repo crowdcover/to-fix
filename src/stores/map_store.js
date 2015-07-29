@@ -94,6 +94,15 @@ module.exports = Reflux.createStore({
             _this.trigger(_this.data);
           });
         break;
+        case 'loggingroads':
+          _this.fetchLoggingRoads(function(err, res) {
+            if (err) {
+              emitError(err);
+              return _this.taskDone(task.id);
+            }
+            _this.trigger(_this.data);
+          });
+          break;
       }
     });
   },
@@ -152,6 +161,18 @@ module.exports = Reflux.createStore({
 
       }
     );
+
+  },
+
+  fetchLoggingRoads: function(cb) {
+    var _this = this;
+    var uri = config.osmApi + 'way/' + _this.data.value.way_id + '/full';
+
+    xhr({uri: uri, responseType: 'document'}, function(err, res) {
+      if (err || res.statusCode != 200) return cb(err || { status: res.statusCode });
+      _this.data.mapData.push(res.body);
+      cb(null);
+    });
 
   },
 
