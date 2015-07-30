@@ -19,6 +19,10 @@ module.exports = Reflux.createStore({
       key: '',
       value: {},
       mapData: [],
+      position: {
+        center: {},
+        zoom: {}
+      },
       baseLayer: store.get('baseLayer') ? store.get('baseLayer') : null
     };
     this.listenTo(actions.taskData, this.taskData);
@@ -26,7 +30,7 @@ module.exports = Reflux.createStore({
     this.listenTo(actions.baseLayerChange, this.baseLayerChange);
     this.listenTo(actions.taskSkip, this.taskSkip);
     this.listenTo(actions.taskEdit, this.taskEdit);
-    this.listenTo(actions.taskNotError, this.taskNotError);    
+    this.listenTo(actions.taskNotError, this.taskNotError);
   },
 
   getInitialState: function() {
@@ -42,7 +46,7 @@ module.exports = Reflux.createStore({
         this.taskData(task);
     }.bind(this));
   },
-   
+
   taskNotError: function(task) {
     postToTaskServer('noterror/' + task, {
       user: store.get('username'),
@@ -185,7 +189,7 @@ module.exports = Reflux.createStore({
       user: store.get('username'),
       action: 'skip',
       key: this.data.key
-    });    
+    });
   },
 
   taskEdit: function(task) {

@@ -35,7 +35,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var klass = 'pin-bottomleft z1000 offcanvas-bottom animate pad1 col12';
+    var klass = 'pin-bottomleft z1000 offcanvas-left animate pad1 col12';
     klass += (this.state.error) ? ' active' : '';
 
     return (

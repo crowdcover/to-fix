@@ -12,6 +12,7 @@ var Redirect = Router.Redirect;
 
 var Header = require('./components/shared/header');
 var Sidebar = require('./components/shared/sidebar');
+var Editbar = require('./components/workspace/crowdsource_editbar');
 var Task = require('./components/task');
 var Stats = require('./components/stats');
 var Activity = require('./components/activity');
@@ -31,10 +32,12 @@ var App = React.createClass({
       <div>
         <Header />
         <Sidebar />
-        <div className='main clip fill-navy-dark col12 pin-bottom space-top6 animate col12 clearfix'>
+
+        <div className='main fill-navy-dark col12 pin-bottom space-top6 space-bottom6 animate col12 clearfix'>
           <RouteHandler />
           <ErrorDialog />
         </div>
+        <Editbar />
         <Modal />
       </div>
       /* jshint ignore:end */

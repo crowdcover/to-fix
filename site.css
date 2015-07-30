@@ -32,6 +32,11 @@ h4, h5, h6 {
   line-height:28px;
   }
 h2 { padding-top:0; padding-bottom:0; }
+
+.editbar {
+  position: fixed;
+}
+
 .editbar .tabs > * {
   border-width:0 0 0 1px;
   background-color:rgba(0,0,0,0.75);
@@ -101,11 +106,18 @@ h2 { padding-top:0; padding-bottom:0; }
 /* Layout
 ------------------------- */
 .sidebar.active ~ .main { width:83.3334%; left:16.6666%; }
-.map {
+.map, .leaflet-container {
   width:100%;
-  height:100%;
+  height:50%;
   bottom:0;
   }
+
+.map-title h2 {
+  -webkit-text-stroke: 1px black;
+  color: white;
+  font-size: 32px !important;
+ }
+
 
 /* Colors
 ------------------------- */
@@ -243,7 +255,7 @@ header .button {
 
 .leaflet-clickable {
   fill:transparent;
-  stroke-opacity:1;
+  stroke-opacity:0.75;
   stroke:#FF1F7C;
   stroke-width: 4;
   }
@@ -271,6 +283,7 @@ text {
   shape-rendering:crispEdges;
   }
 
+
 /* Small Screen Layout
 ------------------------- */
 @media only screen and (max-width:900px) {
@@ -287,4 +300,50 @@ text {
 @media only screen and (max-width:640px) {
   .sidebar                { width:100%; }
   .sidebar.active ~ .main { width:0; left:100%; }
+}
+
+/*  SECTIONS  */
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+  display: block;
+  float:left;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+/*  GRID OF FOUR  */
+.span_4_of_4 {
+  width: 100%;
+}
+.span_3_of_4 {
+  width: 75%;
+}
+.span_2_of_4 {
+  width: 50%;
+}
+.span_1_of_4 {
+  width: 25%;
+}
+
+
+/*  GO to 2 Cols BELOW 960 PIXELS */
+@media only screen and (max-width: 960px) {
+  .col {   }
+  .span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4 { width: 50%; }
+}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+  .col {  }
+  .span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4 { width: 100%; }
 }
