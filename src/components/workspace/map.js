@@ -145,7 +145,7 @@ module.exports = React.createClass({
 
     //prompt user for confirmation
 
-    //save change to OSM
+    actions.openSaveToOSM(this.context.router.getCurrentParams().task);
 
     //actions.taskDone(this.context.router.getCurrentParams().task);
 
@@ -162,7 +162,7 @@ module.exports = React.createClass({
     return (
       /* jshint ignore:start */
       <div id={this.state.id} className="mode map active fill-navy-dark">
-          <button onClick={this.select} className='pin-bottom z10000 button rcon next round animate pad1y pad2x strong'>Select</button>
+          <button onClick={this.select} className='pin-bottom z1000 button rcon next round animate pad1y pad2x strong'>Select</button>
       </div>
       /* jshint ignore:end */
     );

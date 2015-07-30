@@ -74,6 +74,7 @@ h2 { padding-top:0; padding-bottom:0; }
 /* Base candidates
 ------------------------- */
 .row-60     { height:60px; }
+.row-200     { height:200px; }
 .space-top6 { top:60px; }
 .scroll-styled { height:100%; }
 .z1000 { z-index:1000; }

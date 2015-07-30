@@ -22,14 +22,14 @@ module.exports = React.createClass({
     this.props.onClose(e);
   },
 
-  userLogout: function(e) {
-    this.props.onClose(e);
-    actions.userLogout();
-  },
 
-  setEditor: function(e) {
-    var editor = e.target.getAttribute('id');
-    actions.editorPreference(editor);
+  onSave: function(e) {
+    alert("Simulating Submission to OSM");
+
+    //mark task as fixed
+    //actions.taskDone(this.context.router.getCurrentParams().task);
+
+    this.props.onClose(e);
   },
 
   stopProp: function(e) {
@@ -38,7 +38,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var editor = (store.get('editor')) ? store.get('editor') : 'ideditor';
+
 
     return (
       /* jshint ignore:start */
@@ -46,14 +46,22 @@ module.exports = React.createClass({
         <div className='col4 modal-body fill-purple contain' onClick={this.stopProp}>
           <button onClick={this.props.onClose} className='unround pad1 icon fr close button quiet'></button>
           <div className='pad2'>
-            <h2 className='dark'>Settings</h2>
+            <h2 className='dark'>Confirm Change to OpenStreetMap</h2>
           </div>
 
+          <form className='dark' onSubmit={this.onSave}>
+            <fieldset className='pad2x'>
+              <label>Comment</label>
+              <input className='col12 block clean' ref='taskname' type='textarea' name='name' placeholder='Add a Comment' defaultValue='#logging-roads added logging road start date'/>
+            </fieldset>
 
 
-          <div className='pad2x pad1y fill-light round-bottom text-right'>
-            <button onClick={this.userLogout} className='rcon logout button quiet animate'>Logout</button>
-          </div>
+            <div className='pad2x pad1y fill-light round-bottom col12 clearfix'>
+              <input className='col6 margin3 button' type='submit' value='Save to OSM' />
+            </div>
+          </form>
+
+
         </div>
       </div>
       /* jshint ignore:end */

@@ -22,6 +22,7 @@ var actions = Reflux.createActions({
   // Modals
   'openSettings': {},
   'openUpload': {},
+  'openSaveToOSM': {},
 
   // Dialogs
   'errorDialog': {},

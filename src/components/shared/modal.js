@@ -7,27 +7,32 @@ var actions = require('../../actions/actions');
 // Modals
 var Upload = require('./modals/upload');
 var Settings = require('./modals/settings');
+var SaveToOSM = require('./modals/saveToOSM');
 
 module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(actions.openSettings, 'openSettings'),
-    Reflux.listenTo(actions.openUpload, 'openUpload')
+    Reflux.listenTo(actions.openUpload, 'openUpload'),
+    Reflux.listenTo(actions.openSaveToOSM, 'openSaveToOSM')
   ],
 
   getInitialState: function() {
     return {
       settingsModal: null,
-      UploadModal: null
+      UploadModal: null,
+      saveToOSMModal: null,
     };
   },
 
   openSettings: function() { this.setState({ settingsModal: true }); },
   openUpload: function() { this.setState({ uploadModal: true }); },
+  openSaveToOSM: function() { this.setState({ saveToOSMModal: true }); },
 
   closeModal: function() {
     this.setState({
       settingsModal: null,
-      uploadModal: null
+      uploadModal: null,
+      saveToOSMModal: null
     });
   },
 
@@ -40,6 +45,9 @@ module.exports = React.createClass({
 
         {(this.state.uploadModal) ?
           (<Upload onClose={this.closeModal}/>) : ''}
+
+        {(this.state.saveToOSMModal) ?
+          (<SaveToOSM onClose={this.closeModal}/>) : ''}
       </div>
       /* jshint ignore:end */
     );
