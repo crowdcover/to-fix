@@ -63,6 +63,13 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
+  componentDidMount: function(){
+    //if the user isn't logged in have them do that first
+    if (!this.state.user || !this.state.user.auth) {
+      actions.userLogin();
+    }
+  },
+
 
   render: function() {
     this.state.comment = this.props.comment;
