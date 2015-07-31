@@ -1,7 +1,7 @@
 {
-  "name": "TO-FIX",
+  "name": "Fix-Logging-Roads",
   "version": "1.0.0",
-  "description": "A task manager for OpenStreetMap",
+  "description": "A task manager for fixing logging road data in OpenStreetMap",
   "main": "src/index.js",
   "dependencies": {
     "d3": "^3.5.5",
@@ -33,12 +33,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/osmlab/to-fix.git"
+    "url": "https://github.com/crowdcover/to-fix.git"
   },
-  "author": "Aaron Lidman",
+  "author": "Kristofor Carle",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/osmlab/to-fix/issues"
+    "url": "https://github.com/crowdcover/to-fix/issues"
   },
-  "homepage": "https://github.com/osmlab/to-fix"
+  "homepage": "https://github.com/crowdcover/to-fix"
 }

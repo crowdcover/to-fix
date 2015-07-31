@@ -51,11 +51,12 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
 
-    var map = L.mapbox.map(this.state.id, 'mapbox.streets', this.props);
+    var map = L.map(this.state.id, this.props);
+    map.attributionControl.setPrefix("");
 
     var tileUrl = 'https://wri-tiles.s3.amazonaws.com/umd_landsat/' + this.props.year.toString() + '/{z}/{y}/{x}.png';
-    L.tileLayer(tileUrl, {
-      attribution: 'UMD Landsat',
+    var layer = L.tileLayer(tileUrl, {
+      attribution: 'UMD Landsat - '+this.props.year,
       maxNativeZoom: 13
     }).addTo(map);
 
@@ -143,14 +144,16 @@ module.exports = React.createClass({
 
   select: function() {
 
+    //TODO: if task is verification, check if the new selection matches the old
+    var year = this.props.year;
+    if(year == '2000') year = 'before 2000';
+    this.state.map.iDEntity[0].tags.start_date = year;
+
     //prompt user for confirmation
-
-    actions.openSaveToOSM(this.context.router.getCurrentParams().task);
-
-    //actions.taskDone(this.context.router.getCurrentParams().task);
+    //TODO: push these props into the task definition?
+    actions.openSaveToOSM({modify: false, message: 'adding tag: start_date='+year, imageryUsed: ['UMD Landsat'], comment: '#logging-roads added logging road start date'});
 
   },
-
 
   render: function() {
 

@@ -36,7 +36,7 @@ module.exports = React.createClass({
             <span className='icon big menu'></span>
           </a>
           <a href='/' className='pad2x'>
-            <h1 className='inline fancy title'>Fix Logging Roads in OpenStreetMap</h1>
+            <h1 className='inline fancy title'>Fix Logging Roads</h1>
           </a>
         </nav>
         <div className='col6 truncate text-right pad1'>

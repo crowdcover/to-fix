@@ -26,7 +26,10 @@ module.exports = React.createClass({
 
   openSettings: function() { this.setState({ settingsModal: true }); },
   openUpload: function() { this.setState({ uploadModal: true }); },
-  openSaveToOSM: function() { this.setState({ saveToOSMModal: true }); },
+  openSaveToOSM: function(props) {
+    props.saveToOSMModal = true;
+    this.setState(props);
+  },
 
   closeModal: function() {
     this.setState({
@@ -47,7 +50,7 @@ module.exports = React.createClass({
           (<Upload onClose={this.closeModal}/>) : ''}
 
         {(this.state.saveToOSMModal) ?
-          (<SaveToOSM onClose={this.closeModal}/>) : ''}
+          (<SaveToOSM onClose={this.closeModal} {...this.state}/>) : ''}
       </div>
       /* jshint ignore:end */
     );

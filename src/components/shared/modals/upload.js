@@ -53,7 +53,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var editor = (store.get('editor')) ? store.get('editor') : 'ideditor';
+    var editor = (store.get('editor')) ? store.get('editor') : 'imagery-grid';
 
     return (
       /* jshint ignore:start */

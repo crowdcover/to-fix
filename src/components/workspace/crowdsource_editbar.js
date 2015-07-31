@@ -31,9 +31,6 @@ module.exports = React.createClass({
     actions.taskSkip(task);
   },
 
-  fixed: function() {
-    actions.taskDone(this.context.router.getCurrentParams().task);
-  },
 
   geolocate: function(placename) {
     this.setState({
@@ -56,7 +53,7 @@ module.exports = React.createClass({
         /* jshint ignore:start */
         <nav className='tabs col12 clearfix mobile-cols'>
           <button onClick={this.skip} className='col3 button animate'>Skip</button>
-          <button onClick={this.skip} className='col9 button animate'>Too Difficult / Can't See</button>
+          <button onClick={this.skip} className='col9 button animate'>Too Difficult / Road is Not Visible in any Year</button>
         </nav>
         /* jshint ignore:end */
       );
@@ -64,15 +61,16 @@ module.exports = React.createClass({
 
     return (
       /* jshint ignore:start */
-      <div className='editbar pin-bottomleft col12 z10000'>
+      <div className='editbar pin-bottomleft margin2 col12 z10000'>
 
-        <div className='round col6 margin3'>
+        <div className='round col9'>
           {taskActions}
           <div className='fill-lighten3 round-bottom col12 pad2x pad1y center strong inline truncate'>
-            {taskTitle} {this.state.placename ? <span className='quiet icon marker'>{this.state.placename}</span> : ''}
+            Task: {taskTitle} {this.state.placename ? <span className='quiet icon marker'>{this.state.placename}</span> : ''}
           </div>
           <div className='fill-lighten3 round-bottom col12 pad2x pad1y center strong inline truncate'>
-            <p>Scroll Down for Additional Years</p>
+            <h3>Instructions: Select the earliest year where the road is visible. This tells us when the road was created.</h3>
+            <p>Scroll down for additional years.</p>
           </div>
         </div>
 

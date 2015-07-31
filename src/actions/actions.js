@@ -38,6 +38,7 @@ var actions = Reflux.createActions({
   'taskActivity': {},
   'taskActivityLoaded': {},
   'taskTotals': {},
+  'taskSavedInOSM': {},
 
   'statSummaries': {},
   'updatePermalink': {},

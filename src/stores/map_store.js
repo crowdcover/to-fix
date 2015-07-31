@@ -9,6 +9,9 @@ var taskObj = require('../mixins/taskobj');
 var emitError = require('../mixins/error');
 var postToTaskServer = require('../mixins/taskserver').post;
 
+var iD = require('../util/idWay');
+
+
 var config = require('../config');
 
 module.exports = Reflux.createStore({
@@ -172,13 +175,71 @@ module.exports = Reflux.createStore({
     var _this = this;
     var uri = config.osmApi + 'way/' + _this.data.value.way_id + '/full';
 
+    //when testing on dev api just use a test way
+    //var uri = config.osmApi + 'way/4297845777/full';
+
     xhr({uri: uri, responseType: 'document'}, function(err, res) {
       if (err || res.statusCode != 200) return cb(err || { status: res.statusCode });
       _this.data.mapData.push(res.body);
+      _this.data.iDEntity = _this.parse(res.body);
       cb(null);
     });
 
   },
+
+    getNodes: function(obj) {
+    var elems = obj.getElementsByTagName('nd'),
+      nodes = new Array(elems.length);
+    for (var i = 0, l = elems.length; i < l; i++) {
+      nodes[i] = 'n' + elems[i].attributes.ref.value;
+    }
+    return nodes;
+  },
+
+   getTags: function(obj) {
+    var elems = obj.getElementsByTagName('tag'),
+      tags = {};
+    for (var i = 0, l = elems.length; i < l; i++) {
+      var attrs = elems[i].attributes;
+      tags[attrs.k.value] = attrs.v.value;
+    }
+    return tags;
+  },
+
+  getVisible: function(attrs) {
+    return (!attrs.visible || attrs.visible.value !== 'false');
+  },
+
+  parseWayHelper: function (obj) {
+    var attrs = obj.attributes;
+    var _this = this;
+    return new iD.Way({
+      id: iD.Entity.id.fromOSM('way', attrs.id.value),
+      version: attrs.version.value,
+      user: attrs.user && attrs.user.value,
+      tags: _this.getTags(obj),
+      nodes: _this.getNodes(obj),
+      visible: _this.getVisible(attrs)
+    });
+  },
+
+  parse: function(dom) {
+  if (!dom || !dom.childNodes) return;
+
+  var root = dom.childNodes[0],
+    children = root.childNodes,
+    entities = [];
+
+  for (var i = 0, l = children.length; i < l; i++) {
+    var child = children[i];
+    if(child.nodeName == 'way') {
+      entities.push(this.parseWayHelper(child));
+    }
+
+  }
+
+  return entities;
+},
 
   baseLayerChange: function(name) {
     store.set('baseLayer', name);

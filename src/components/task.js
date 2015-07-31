@@ -16,6 +16,7 @@ var xhr = require('xhr');
 var EditBar = require('./workspace/editbar');
 var Map = require('./workspace/map');
 var MapStore = require('../stores/map_store');
+var UserStore = require('../stores/user_store');
 var BingLayer = require('../ext/bing.js');
 
 require('mapbox.js');
@@ -31,7 +32,8 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(MapStore, 'map'),
-    Reflux.listenTo(actions.taskEdit, 'taskEdit'),
+    Reflux.connect(UserStore, 'user'),
+    Reflux.listenTo(actions.taskSavedInOSM, 'fixed'),
     Reflux.listenTo(actions.mapPositionUpdate, 'geolocate')
   ],
 
@@ -41,8 +43,9 @@ module.exports = React.createClass({
     }
   },
 
-
-
+  fixed: function() {
+    actions.taskDone(this.context.router.getCurrentParams().task);
+  },
 
   skip: function() {
     // Set editor state as complete and trigger the done action
@@ -77,11 +80,13 @@ module.exports = React.createClass({
       }
     });
   },
+  componentDidMount: function(){
+    if (this.state.user && this.state.user.auth) {
+      //record an Edit action in the activity automatically
+      actions.taskEdit(this.context.router.getCurrentParams().task);
+    }
+  },
 
-
-  /*
-
-   */
   render: function() {
 
     return (
