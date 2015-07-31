@@ -173,10 +173,16 @@ module.exports = Reflux.createStore({
 
   fetchLoggingRoads: function(cb) {
     var _this = this;
-    var uri = config.osmApi + 'way/' + _this.data.value.way_id + '/full';
+    var uri = ''
+    if(config.devApi){
+      //when testing on dev api just use a test way
+      uri = config.osmApi + 'way/4297845777/full';
+    } else {
+      uri = config.osmApi + 'way/' + _this.data.value.way_id + '/full';
+    }
 
-    //when testing on dev api just use a test way
-    //var uri = config.osmApi + 'way/4297845777/full';
+
+
 
     xhr({uri: uri, responseType: 'document'}, function(err, res) {
       if (err || res.statusCode != 200) return cb(err || { status: res.statusCode });
