@@ -160,12 +160,17 @@ module.exports = React.createClass({
 
     var map = this.leafletElement;
 
+    var buttonText = 'Created in ';
+    if(this.props.year == 2000){
+      buttonText += '2000 or before'
+    } else {
+        buttonText += this.props.year
+    }
 
-
-    return (
+    return (  
       /* jshint ignore:start */
       <div id={this.state.id} className="mode map active fill-navy-dark">
-          <button onClick={this.select} className='pin-bottom z1000 button rcon next round animate pad1y pad2x strong'>Select</button>
+          <button onClick={this.select} className='pin-bottom z1000 button rcon next round animate pad1y pad2x strong'>{buttonText}</button>
       </div>
       /* jshint ignore:end */
     );
