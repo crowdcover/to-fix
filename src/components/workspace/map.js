@@ -53,6 +53,9 @@ module.exports = React.createClass({
 
     var map = L.map(this.state.id, this.props);
     map.attributionControl.setPrefix("");
+    
+    
+    
     var tileUrl = '';
     var maxNativeZoom = 13  ;
     if(this.props.year == 2014){
@@ -68,6 +71,8 @@ module.exports = React.createClass({
       maxNativeZoom: maxNativeZoom
     }).addTo(map);
 
+    //road lines
+    L.mapbox.tileLayer('crowdcover.57a65f88').addTo(map);
 
     // Map controls
     map.zoomControl.setPosition('topleft');
