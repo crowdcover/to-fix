@@ -141,7 +141,9 @@ module.exports = React.createClass({
           <div className="col span_1_of_4">
             <Map year="2013" />
           </div>
-
+          <div className="col span_1_of_4">
+            <Map year="2014" />
+          </div>
         </div>
         <div className="row-200">
 

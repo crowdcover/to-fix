@@ -53,11 +53,19 @@ module.exports = React.createClass({
 
     var map = L.map(this.state.id, this.props);
     map.attributionControl.setPrefix("");
-
-    var tileUrl = 'https://wri-tiles.s3.amazonaws.com/umd_landsat/' + this.props.year.toString() + '/{z}/{y}/{x}.png';
+    var tileUrl = '';
+    var maxNativeZoom = 13  ;
+    if(this.props.year == 2014){
+      tileUrl = 'https://storage.googleapis.com/earthenginepartners-hansen/tiles/gfc2015/last_457/{z}/{x}/{y}.jpg';
+      maxNativeZoom = 12;
+    }else {
+      tileUrl = 'https://wri-tiles.s3.amazonaws.com/umd_landsat/' + this.props.year.toString() + '/{z}/{y}/{x}.png';
+    }
+    
+    
     var layer = L.tileLayer(tileUrl, {
       attribution: 'UMD Landsat - '+this.props.year,
-      maxNativeZoom: 13
+      maxNativeZoom: maxNativeZoom
     }).addTo(map);
 
 
