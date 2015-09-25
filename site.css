@@ -33,6 +33,12 @@ h4, h5, h6 {
   }
 h2 { padding-top:0; padding-bottom:0; }
 
+.select-year {
+   position:absolute;
+   top: 0px;
+   right: 0px;
+}
+
 .editbar {
   position: fixed;
 }

@@ -93,7 +93,7 @@ module.exports = React.createClass({
 
 
     //add year title
-    var info = L.control();
+    var info = L.control({ position: 'bottomright' });
 
     var year = this.props.year;
     info.onAdd = function () {
@@ -184,7 +184,7 @@ module.exports = React.createClass({
     return (  
       /* jshint ignore:start */
       <div id={this.state.id} className="mode map active fill-navy-dark">
-          <button onClick={this.select} className='pin-bottom z1000 button rcon next round animate pad1y pad2x strong'>{buttonText}</button>
+          <button onClick={this.select} className='select-year z1000 button rcon next round animate pad1y pad2x strong'>{buttonText}</button>
       </div>
       /* jshint ignore:end */
     );
