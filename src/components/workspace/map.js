@@ -137,6 +137,7 @@ module.exports = React.createClass({
         this.leafletElement.fitBounds(layer.getBounds(), { reset: true });
 
       }.bind(this));
+      this.leafletElement.setZoom(this.leafletElement.getZoom()-1);
     }
 
   },
