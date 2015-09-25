@@ -22,7 +22,7 @@ module.exports = React.createClass({
   render: function() {
     var topLevel = this.context.router.getCurrentRoutes()[1].name;
     var appSettings = this.state.appSettings;
-    var sidebarClass = 'sidebar pin-bottomleft clip col2 animate offcanvas-left fill-navy space-top6';
+    var sidebarClass = 'sidebar pin-bottomleft clip col2 animate offcanvas-left space-top6';
     if (appSettings.sidebar) sidebarClass += ' active';
 
     var tasks = taskItems.map(function(task, i) {

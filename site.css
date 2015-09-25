@@ -128,24 +128,39 @@ h2 { padding-top:0; padding-bottom:0; }
 
 /* Colors
 ------------------------- */
+header {
+  background-color:#171617;
+}
+
+.sidebar {
+  background-color:RGBA(57, 60, 64, 1);
+}
+a.quiet{
+  color: #FFF;
+}
+
+a.quiet.active, a.quiet:hover {
+    color: RGBA(252, 124, 31, 1)
+}
+
 button,
 .button,
 [type=button],
 [type=submit] {
-  background-color:#6E65B3;
+  background-color:#FC7C1F;
   }
 button:hover,
 .button:hover,
 [type=button]:hover,
 [type=submit]:hover {
-  background-color:#534c87;
+  background-color:#F16405;
   }
 
 .progress,
 header .button.active,
 header .button.active:hover,
-.fill-purple { background-color:#6E65B3; }
-.area { fill:rgb(110, 101, 179); }
+.fill-purple { background-color:#FC7C1F; }
+.area { fill:#FC7C1F; }
 
 /* Components
 ------------------------- */
@@ -156,15 +171,15 @@ header .button.active:hover,
   }
 header .fancy.title {
   line-height:60px;
-  color:rgba(0,0,0,0.75);
+  color:RGBA(252, 124, 31, 1);
   }
 
 header .button {
   background-color:transparent;
-  color:rgba(0,0,0,0.5);
+  color:rgba(255,255,255,0.8);
   }
   header .button:hover {
-    background-color:rgba(0,0,0,0.05);
+    background-color:#FC7C1F;
     color:rgba(0,0,0,0.75);
     }
   header .button.active {

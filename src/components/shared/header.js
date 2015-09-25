@@ -30,7 +30,7 @@ module.exports = React.createClass({
 
     return (
       /* jshint ignore:start */
-      <header className='fill-light keyline-bottom row-60 col12 clearfix mobile-cols'>
+      <header className='keyline-bottom row-60 col12 clearfix mobile-cols'>
         <nav className='col6 truncate'>
           <a href='#' onClick={this.toggle} className={toggleClass}>
             <span className='icon big menu'></span>
