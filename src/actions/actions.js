@@ -11,6 +11,7 @@ var actions = Reflux.createActions({
   'baseLayerChange': {},
   'geolocated': {},
   'mapPositionUpdate': {},
+  'mapRoadToggle': {},
 
   // Application settings
   'sidebarToggled': {},

@@ -4,6 +4,7 @@ var React = require('react');
 var Reflux = require('reflux');
 var actions = require('../../actions/actions');
 var UserStore = require('../../stores/user_store');
+var MapStore = require('../../stores/map_store');
 var taskObj = require('../../mixins/taskobj');
 
 module.exports = React.createClass({
@@ -13,8 +14,16 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(UserStore, 'user'),
+    Reflux.connect(MapStore, 'map'),
     Reflux.listenTo(actions.geolocated, 'geolocate')
   ],
+  
+  getInitialState() {
+    return {
+      roadButtonText: 'Hide Roads',
+      showRoads: true
+    }
+  },
 
 
   edit: function() {
@@ -36,6 +45,22 @@ module.exports = React.createClass({
     this.setState({
       placename: placename
     });
+  },
+  toggleRoads: function(e){
+    if(this.state.showRoads){
+       this.setState({
+      showRoads: false,
+      roadButtonText: 'Show Roads'
+    });
+     actions.mapRoadToggle(false);
+    }else{
+       this.setState({
+      showRoads: true,
+      roadButtonText: 'Hide Roads'   
+    });
+    actions.mapRoadToggle(true);
+    } 
+    
   },
 
   render: function() {
@@ -73,7 +98,7 @@ module.exports = React.createClass({
             <p>Scroll down for additional years.</p>
           </div>
         </div>
-
+        <button onClick={this.toggleRoads} className=' z1000  pin-bottomleft button round animate pad1y pad2x strong'>{this.state.roadButtonText}</button>
       </div>
       /* jshint ignore:end */
     );

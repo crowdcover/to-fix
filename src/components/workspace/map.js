@@ -17,7 +17,8 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(MapStore, 'map'),
-    Reflux.listenTo(actions.mapPositionUpdate, 'updatePosition')
+    Reflux.listenTo(actions.mapPositionUpdate, 'updatePosition'),
+    Reflux.listenTo(actions.mapRoadToggle, 'mapRoadToggle')
   ],
 
 
@@ -30,8 +31,8 @@ module.exports = React.createClass({
     minZoom: React.PropTypes.number,
     style: React.PropTypes.object,
     zoom: React.PropTypes.number,
-    keyboard: React.PropTypes.boolean,
-    year: React.PropTypes.number
+    keyboard: React.PropTypes.bool,
+    year: React.PropTypes.string
   },
 
   getInitialState() {
@@ -72,7 +73,8 @@ module.exports = React.createClass({
     }).addTo(map);
 
     //road lines
-    L.mapbox.tileLayer('crowdcover.57a65f88').addTo(map);
+    var roadLinesLayer = L.mapbox.tileLayer('crowdcover.57a65f88').addTo(map);
+    this.roadLinesLayer = roadLinesLayer;
 
     // Map controls
     map.zoomControl.setPosition('topleft');
@@ -118,7 +120,7 @@ module.exports = React.createClass({
     return next[0] !== prev[0] || next[1] !== prev[1];
   },
 
-  componentDidUpdate: function(prevProps) {
+  componentDidUpdate: function(prevProps, prevState) {
 
     var center = this.props.center;
     var zoom = this.props.zoom;
@@ -128,23 +130,43 @@ module.exports = React.createClass({
     else if (zoom && zoom !== prevProps.zoom) {
       this.leafletElement.setZoom(zoom);
     }
+    
+    
+    this.updateRoads();
+   
+     
+     
+    
+  
 
-    if (this.taskLayer && this.taskLayer.getLayers()) {
+  },
+  
+  updateRoads: function(){
+    this.removeRoads();
+    this.drawRoads();
+  },
+  
+  removeRoads: function(){
+    this.leafletElement.removeLayer(this.roadLinesLayer);
+    
+     if (this.taskLayer && this.taskLayer.getLayers()) {
       var taskLayer = this.taskLayer;
       taskLayer.getLayers().forEach(function(l) {
         taskLayer.removeLayer(l);
       });
     }
-
-    if (this.state.map.mapData.length) {
+  },
+  
+  drawRoads: function(){
+    //draw the layers
+      this.roadLinesLayer.addTo(this.leafletElement);
+       if (this.state.map.mapData.length) {
       this.state.map.mapData.forEach(function(xml) {
         var layer = new L.OSM.DataLayer(xml).addTo(this.taskLayer);
-        this.leafletElement.fitBounds(layer.getBounds(), { reset: true });
-
+        this.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
       }.bind(this));
-      this.leafletElement.setZoom(this.leafletElement.getZoom()-1);
+      this.leafletElement.setZoom(this.leafletElement.getZoom()-1, {animate: false});
     }
-
   },
 
   componentWillUnmount: function() {
@@ -154,6 +176,15 @@ module.exports = React.createClass({
   updatePosition: function() {
     var map = this.leafletElement;
     map.setView(this.state.map.position.center, this.state.map.position.zoom, {animate: false});
+  },
+  
+   mapRoadToggle: function(show) {
+     if(show){
+       this.drawRoads();
+     }else{
+       this.removeRoads();
+       
+     }
   },
 
   select: function() {
