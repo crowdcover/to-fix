@@ -55,7 +55,7 @@ module.exports = React.createClass({
     var map = L.map(this.state.id, this.props);
     map.attributionControl.setPrefix("");
     
-    
+    map.scrollWheelZoom.disable();
     
     var tileUrl = '';
     var maxNativeZoom = 13  ;
