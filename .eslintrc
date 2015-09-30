@@ -1,5 +1,13 @@
 {
+  "parser": "babel-eslint",
   "rules": {
+    "babel/block-scoped-var": 1,
+  "babel/object-shorthand": 1,
+  "babel/generator-star": 1,
+  "babel/generator-star-spacing": 1,
+  "babel/new-cap": 1,
+  "babel/object-curly-spacing": 1,
+  "babel/space-in-brackets": 1,
     "space-after-function-name": 2,
     "space-before-blocks": 2,
     "space-after-keywords": 2,
@@ -22,11 +30,19 @@
     "dot-notation": [0],
     "no-shadow": 0
   },
+  "ecmaFeatures": {
+      "blockBindings": true,
+      "forOf": true,
+      "jsx": true
+  },
   "env": {
     "node": true,
     "browser": true
   },
   "globals": {
     "L": true
-  }
+  },
+  "plugins": [
+    "babel"
+  ]
 }
