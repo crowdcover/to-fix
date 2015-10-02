@@ -9,6 +9,7 @@
     "leaflet-osm": "^0.1.0",
     "lodash": "^3.10.0",
     "mapbox.js": "2.1.9",
+    "nuka-carousel": "0.0.19",
     "osm-auth": "^0.2.8",
     "raven-js": "^1.1.17",
     "react": "^0.13.1",

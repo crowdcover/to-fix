@@ -1,46 +1,45 @@
-if(!iD) var iD = {};
 
 var _= require('lodash');
 
-iD.Entity = function(attrs) {
+var Entity = function(attrs) {
   // For prototypal inheritance.
-  if (this instanceof iD.Entity) return;
+  if (this instanceof Entity) return;
 
   // Create the appropriate subtype.
   if (attrs && attrs.type) {
-    return iD.Entity[attrs.type].apply(this, arguments);
+    return Entity[attrs.type].apply(this, arguments);
   } else if (attrs && attrs.id) {
-    return iD.Entity[iD.Entity.id.type(attrs.id)].apply(this, arguments);
+    return Entity[Entity.id.type(attrs.id)].apply(this, arguments);
   }
 
   // Initialize a generic Entity (used only in tests).
   return (new iD.Entity()).initialize(arguments);
 };
 
-iD.Entity.id = function(type) {
-  return iD.Entity.id.fromOSM(type, iD.Entity.id.next[type]--);
+Entity.id = function(type) {
+  return Entity.id.fromOSM(type, Entity.id.next[type]--);
 };
 
-iD.Entity.id.next = {node: -1, way: -1, relation: -1};
+Entity.id.next = {node: -1, way: -1, relation: -1};
 
-iD.Entity.id.fromOSM = function(type, id) {
+Entity.id.fromOSM = function(type, id) {
   return type[0] + id;
 };
 
-iD.Entity.id.toOSM = function(id) {
+Entity.id.toOSM = function(id) {
   return id.slice(1);
 };
 
-iD.Entity.id.type = function(id) {
+Entity.id.type = function(id) {
   return {'n': 'node', 'w': 'way', 'r': 'relation'}[id[0]];
 };
 
 // A function suitable for use as the second argument to d3.selection#data().
-iD.Entity.key = function(entity) {
+Entity.key = function(entity) {
   return entity.id + 'v' + (entity.v || 0);
 };
 
-iD.Entity.prototype = {
+Entity.prototype = {
   tags: {},
 
   initialize: function(sources) {
@@ -58,19 +57,10 @@ iD.Entity.prototype = {
     }
 
     if (!this.id && this.type) {
-      this.id = iD.Entity.id(this.type);
+      this.id = Entity.id(this.type);
     }
     if (!this.hasOwnProperty('visible')) {
       this.visible = true;
-    }
-
-    if (iD.debug) {
-      Object.freeze(this);
-      Object.freeze(this.tags);
-
-      if (this.loc) Object.freeze(this.loc);
-      if (this.nodes) Object.freeze(this.nodes);
-      if (this.members) Object.freeze(this.members);
     }
 
     return this;
@@ -79,11 +69,11 @@ iD.Entity.prototype = {
   copy: function() {
     // Returns an array so that we can support deep copying ways and relations.
     // The first array element will contain this.copy, followed by any descendants.
-    return [iD.Entity(this, {id: undefined, user: undefined, version: undefined})];
+    return [Entity(this, {id: undefined, user: undefined, version: undefined})];
   },
 
   osmId: function() {
-    return iD.Entity.id.toOSM(this.id);
+    return Entity.id.toOSM(this.id);
   },
 
   isNew: function() {
@@ -91,7 +81,7 @@ iD.Entity.prototype = {
   },
 
   update: function(attrs) {
-    return iD.Entity(this, attrs, {v: 1 + (this.v || 0)});
+    return Entity(this, attrs, {v: 1 + (this.v || 0)});
   },
 
   mergeTags: function(tags) {
@@ -119,41 +109,11 @@ iD.Entity.prototype = {
       resolver.parentRelations(this).length > 0;
   },
 
-  hasInterestingTags: function() {
-    return _.keys(this.tags).some(function(key) {
-      return key !== 'attribution' &&
-        key !== 'created_by' &&
-        key !== 'source' &&
-        key !== 'odbl' &&
-        key.indexOf('tiger:') !== 0;
-    });
-  },
-
-  isHighwayIntersection: function() {
-    return false;
-  },
-
-  deprecatedTags: function() {
-    var tags = _.pairs(this.tags);
-    var deprecated = {};
-
-    iD.data.deprecated.forEach(function(d) {
-      var match = _.pairs(d.old)[0];
-      tags.forEach(function(t) {
-        if (t[0] === match[0] &&
-          (t[1] === match[1] || match[1] === '*')) {
-          deprecated[t[0]] = t[1];
-        }
-      });
-    });
-
-    return deprecated;
-  }
 };
 
 
 
-iD.Way = iD.Entity.way = function iD_Way() {
+var Way = Entity.way = function iD_Way() {
   if (!(this instanceof iD_Way)) {
     return (new iD_Way()).initialize(arguments);
   } else if (arguments.length) {
@@ -161,14 +121,14 @@ iD.Way = iD.Entity.way = function iD_Way() {
   }
 };
 
-iD.Way.prototype = Object.create(iD.Entity.prototype);
+Way.prototype = Object.create(Entity.prototype);
 
-_.extend(iD.Way.prototype, {
+_.extend(Way.prototype, {
   type: 'way',
   nodes: [],
 
   copy: function(deep, resolver) {
-    var copy = iD.Entity.prototype.copy.call(this);
+    var copy = Entity.prototype.copy.call(this);
 
     if (!deep || !resolver) {
       return copy;
@@ -191,19 +151,6 @@ _.extend(iD.Way.prototype, {
 
     copy[0] = copy[0].update({nodes: nodes});
     return copy;
-  },
-
-  extent: function(resolver) {
-    return resolver.transient(this, 'extent', function() {
-      var extent = iD.geo.Extent();
-      for (var i = 0; i < this.nodes.length; i++) {
-        var node = resolver.hasEntity(this.nodes[i]);
-        if (node) {
-          extent._extend(node.extent());
-        }
-      }
-      return extent;
-    });
   },
 
   first: function() {
@@ -246,57 +193,14 @@ _.extend(iD.Way.prototype, {
     return 0;
   },
 
-  isOneWay: function() {
-    // explicit oneway tag..
-    if (['yes', '1', '-1'].indexOf(this.tags.oneway) !== -1) { return true; }
-    if (['no', '0'].indexOf(this.tags.oneway) !== -1) { return false; }
 
-    // implied oneway tag..
-    for (var key in this.tags) {
-      if (key in iD.oneWayTags && (this.tags[key] in iD.oneWayTags[key]))
-        return true;
-    }
-    return false;
-  },
 
   isClosed: function() {
     return this.nodes.length > 0 && this.first() === this.last();
   },
 
-  isConvex: function(resolver) {
-    if (!this.isClosed() || this.isDegenerate()) return null;
 
-    var nodes = _.uniq(resolver.childNodes(this)),
-      coords = _.pluck(nodes, 'loc'),
-      curr = 0, prev = 0;
 
-    for (var i = 0; i < coords.length; i++) {
-      var o = coords[(i+1) % coords.length],
-        a = coords[i],
-        b = coords[(i+2) % coords.length],
-        res = iD.geo.cross(o, a, b);
-
-      curr = (res > 0) ? 1 : (res < 0) ? -1 : 0;
-      if (curr === 0) {
-        continue;
-      } else if (prev && curr !== prev) {
-        return false;
-      }
-      prev = curr;
-    }
-    return true;
-  },
-
-  isArea: function() {
-    if (this.tags.area === 'yes')
-      return true;
-    if (!this.isClosed() || this.tags.area === 'no')
-      return false;
-    for (var key in this.tags)
-      if (key in iD.areaKeys && !(this.tags[key] in iD.areaKeys[key]))
-        return true;
-    return false;
-  },
 
   isDegenerate: function() {
     return _.uniq(this.nodes).length < (this.isArea() ? 3 : 2);
@@ -367,7 +271,7 @@ _.extend(iD.Way.prototype, {
         '@id': this.osmId(),
         '@version': this.version || 0,
         nd: _.map(this.nodes, function(id) {
-          return { keyAttributes: { ref: iD.Entity.id.toOSM(id) } };
+          return { keyAttributes: { ref: Entity.id.toOSM(id) } };
         }),
         tag: _.map(this.tags, function(v, k) {
           return { keyAttributes: { k: k, v: v } };
@@ -422,4 +326,7 @@ _.extend(iD.Way.prototype, {
   }
 });
 
-module.exports = iD;
+module.exports = {
+  Entity: Entity,
+  Way: Way
+};

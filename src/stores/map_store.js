@@ -73,34 +73,6 @@ module.exports = Reflux.createStore({
       _this.data.value = res.value;
 
       switch (task.source) {
-        case 'keepright':
-          _this.fetchKeepRight(function(err, res) {
-            if (err) return emitError(err);
-            _this.trigger(_this.data);
-          });
-        break;
-        case 'unconnected':
-          _this.fetchUnconnected(function(err, res) {
-            if (err) {
-              emitError(err);
-              return _this.taskDone(task.id);
-            }
-            _this.trigger(_this.data);
-          });
-        break;
-        case 'tigerdelta':
-        case 'krakatoa':
-          _this.trigger(_this.data);
-        break;
-        case 'nycbuildings':
-          _this.fetchBuildingWays(function(err, res) {
-            if (err) {
-              emitError(err);
-              return _this.taskDone(task.id);
-            }
-            _this.trigger(_this.data);
-          });
-        break;
         case 'loggingroads':
           _this.fetchLoggingRoads(function(err, res) {
             if (err) {
@@ -114,74 +86,16 @@ module.exports = Reflux.createStore({
     });
   },
 
-  fetchKeepRight: function(cb) {
-    // Provider: http://keepright.ipax.at/
-    var _this = this;
-    var full = (this.data.value.object_type === 'way') ? '/full' : '';
-    var uri = config.osmApi + this.data.value.object_type + '/' + this.data.value.object_id + full;
-    xhr({uri: uri, responseType: 'document'}, function(err, res) {
-      if (err) return cb(err);
-      _this.data.mapData.push(res.body);
-      cb(null);
-    });
-  },
-
-  fetchUnconnected: function(cb) {
-    var _this = this;
-    var uri = config.osmApi + 'way/' + _this.data.value.way_id + '/full';
-
-    xhr({uri: uri, responseType: 'document'}, function(err, res) {
-      if (err || res.statusCode != 200) return cb(err || { status: res.statusCode });
-      _this.data.mapData.push(res.body);
-      uri = config.osmApi + 'node/' + _this.data.value.node_id;
-
-      xhr({uri: uri, responseType: 'document'}, function(err, res) {
-        if (err || res.statusCode != 200) return cb(err || { status: res.statusCode });
-        _this.data.mapData.push(res.body);
-        cb(null);
-      });
-
-    });
-
-  },
-
-  fetchBuildingWays: function(cb) {
-    var _this = this;
-    var ways = _this.data.value.elems.split('_');
-
-    xhr({
-      uri: config.osmApi + ways[0].split('way').join('way/') + '/full',
-      responseType: 'document'
-    }, function (err, res) {
-        if (err || res.statusCode != 200) return cb(err || {status: res.statusCode});
-        _this.data.mapData.push(res.body);
-
-        xhr({
-          uri: config.osmApi + ways[1].split('way').join('way/') + '/full',
-          responseType: 'document'
-        }, function (err, res) {
-            if (err || res.statusCode != 200) return cb(err || {status: res.statusCode});
-            _this.data.mapData.push(res.body);
-            cb(null);
-          }
-        );
-
-      }
-    );
-
-  },
 
   fetchLoggingRoads: function(cb) {
     var _this = this;
     var uri = ''
-    if(config.devApi){
+    if (config.devApi) {
       //when testing on dev api just use a test way
       uri = config.osmApi + 'way/4297845777/full';
     } else {
       uri = config.osmApi + 'way/' + _this.data.value.way_id + '/full';
     }
-
-
 
 
     xhr({uri: uri, responseType: 'document'}, function(err, res) {

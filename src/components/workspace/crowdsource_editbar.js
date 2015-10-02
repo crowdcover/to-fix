@@ -17,10 +17,9 @@ module.exports = React.createClass({
     Reflux.connect(MapStore, 'map'),
     Reflux.listenTo(actions.geolocated, 'geolocate')
   ],
-  
+
   getInitialState() {
     return {
-      roadButtonText: 'Hide Roads',
       showRoads: true
     }
   },
@@ -46,59 +45,68 @@ module.exports = React.createClass({
       placename: placename
     });
   },
-  toggleRoads: function(e){
-    if(this.state.showRoads){
+  toggleRoads: function(e) {
+    if (this.state.showRoads) {
        this.setState({
-      showRoads: false,
-      roadButtonText: 'Show Roads'
+      showRoads: false
     });
      actions.mapRoadToggle(false);
-    }else{
+    }else {
        this.setState({
-      showRoads: true,
-      roadButtonText: 'Hide Roads'   
+      showRoads: true
     });
     actions.mapRoadToggle(true);
-    } 
-    
+    }
+
   },
 
   render: function() {
     var taskTitle = taskObj(this.context.router.getCurrentParams().task).title;
+
+
+    var toggleRoads = (
+      <div className="toggle-roads">
+         <input onChange={this.toggleRoads} type="checkbox" id="toggleRoads" value="None" name="check" defaultChecked={true} />
+         <label htmlFor="toggleRoads">Show Roads</label>
+       </div>
+    );
+
     var taskActions = (
       /* jshint ignore:start */
-      <nav className='tabs col12 clearfix'>
-        <a onClick={this.skip} className='col12 animate icon refresh'>Preview another task</a>
-      </nav>
+      <div className='col12 clearfix center'>
+        {toggleRoads}
+        <a onClick={this.skip} className='button round animate'>Preview another task</a>
+      </div>
       /* jshint ignore:end */
     );
 
     if (this.state.user && this.state.user.auth) {
       taskActions = (
         /* jshint ignore:start */
-        <nav className='tabs col12 clearfix mobile-cols'>
-          <button onClick={this.skip} className='col3 button animate'>Skip</button>
-          <button onClick={this.skip} className='col9 button animate'>Too Difficult / Road is Not Visible in any Year</button>
-        </nav>
+        <div className='col12 clearfix center'>
+          {toggleRoads}
+          <button onClick={this.skip} className='button round animate' style={{margin: 'auto auto'}}>Skip / Too Difficult</button>
+        </div>
         /* jshint ignore:end */
       );
     }
 
     return (
       /* jshint ignore:start */
-      <div className='editbar pin-bottomleft margin2 col12 z10000'>
+      <div className='crowdsource-editbar fill-lighten3 col12 center' style={{height: '100%'}}>
 
-        <div className='round col9'>
+        <div className='col12' style={{height: '100%', paddingTop: '10px'}}>
+
           {taskActions}
-          <div className='fill-lighten3 round-bottom col12 pad2x pad1y center strong inline truncate'>
+          <div className='col6 pad2x pad1y center strong inline truncate'>
             Task: {taskTitle} {this.state.placename ? <span className='quiet icon marker'>{this.state.placename}</span> : ''}
           </div>
-          <div className='fill-lighten3 round-bottom col12 pad2x pad1y center strong inline truncate'>
-            <h3>Instructions: Select the earliest year where the road is visible. This tells us when the road was created.</h3>
-            <p>Scroll down for additional years.</p>
+          <div className='col6 pad2x pad1y center strong inline truncate'>
+            <p>Feedback/Questions: Contact us at: <a href="mailto:info@loggingroads.org<">info@loggingroads.org</a></p>
           </div>
+
         </div>
-        <button onClick={this.toggleRoads} className=' z1000  pin-bottomleft button round animate pad1y pad2x strong'>{this.state.roadButtonText}</button>
+
       </div>
       /* jshint ignore:end */
     );

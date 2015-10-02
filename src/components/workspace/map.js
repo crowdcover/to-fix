@@ -54,9 +54,9 @@ module.exports = React.createClass({
 
     var map = L.map(this.state.id, this.props);
     map.attributionControl.setPrefix("");
-    
+
     map.scrollWheelZoom.disable();
-    
+
     var tileUrl = '';
     var maxNativeZoom = 13  ;
     if(this.props.year == 2014){
@@ -65,8 +65,8 @@ module.exports = React.createClass({
     }else {
       tileUrl = 'https://wri-tiles.s3.amazonaws.com/umd_landsat/' + this.props.year.toString() + '/{z}/{y}/{x}.png';
     }
-    
-    
+
+
     var layer = L.tileLayer(tileUrl, {
       attribution: 'UMD Landsat - '+this.props.year,
       maxNativeZoom: maxNativeZoom
@@ -95,7 +95,7 @@ module.exports = React.createClass({
 
 
     //add year title
-    var info = L.control({ position: 'bottomright' });
+    var info = L.control({ position: 'topright' });
 
     var year = this.props.year;
     info.onAdd = function () {
@@ -130,25 +130,25 @@ module.exports = React.createClass({
     else if (zoom && zoom !== prevProps.zoom) {
       this.leafletElement.setZoom(zoom);
     }
-    
-    
+
+
     this.updateRoads();
-   
-     
-     
-    
-  
+
+
+
+
+
 
   },
-  
+
   updateRoads: function(){
     this.removeRoads();
     this.drawRoads();
   },
-  
+
   removeRoads: function(){
     this.leafletElement.removeLayer(this.roadLinesLayer);
-    
+
      if (this.taskLayer && this.taskLayer.getLayers()) {
       var taskLayer = this.taskLayer;
       taskLayer.getLayers().forEach(function(l) {
@@ -156,7 +156,7 @@ module.exports = React.createClass({
       });
     }
   },
-  
+
   drawRoads: function(){
     //draw the layers
       this.roadLinesLayer.addTo(this.leafletElement);
@@ -177,13 +177,13 @@ module.exports = React.createClass({
     var map = this.leafletElement;
     map.setView(this.state.map.position.center, this.state.map.position.zoom, {animate: false});
   },
-  
+
    mapRoadToggle: function(show) {
      if(show){
        this.drawRoads();
      }else{
        this.removeRoads();
-       
+
      }
   },
 
@@ -205,17 +205,19 @@ module.exports = React.createClass({
 
     var map = this.leafletElement;
 
-    var buttonText = 'Created in ';
+    var buttonText = 'Select';
+    /*
     if(this.props.year == 2000){
       buttonText += '2000 or before'
     } else {
         buttonText += this.props.year
     }
+    */
 
-    return (  
+    return (
       /* jshint ignore:start */
       <div id={this.state.id} className="mode map active fill-navy-dark">
-          <button onClick={this.select} className='select-year z1000 button rcon next round animate pad1y pad2x strong'>{buttonText}</button>
+          <button onClick={this.select} className='select-year z1000 button round animate strong'>{buttonText}</button>
       </div>
       /* jshint ignore:end */
     );

@@ -36,8 +36,9 @@ var App = React.createClass({
         <div className='main fill-navy-dark col12 pin-bottom space-top6 space-bottom6 animate col12 clearfix'>
           <RouteHandler />
           <ErrorDialog />
+
         </div>
-        <Editbar />
+
         <Modal />
       </div>
       /* jshint ignore:end */
