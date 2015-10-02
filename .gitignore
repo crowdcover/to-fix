@@ -7,3 +7,5 @@
 node_modules/
 .lev_history
 dist/bundle.js
+bower_components
+.idea
