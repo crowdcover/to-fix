@@ -51,13 +51,18 @@ module.exports = React.createClass({
 
   fixed: function() {
     actions.taskDone(this.context.router.getCurrentParams().task);
-    this.state.carousels.carousel.goToSlide(0);
+    if (this.state.carousels.carousel) {
+      this.state.carousels.carousel.goToSlide(0);
+    }
+
   },
 
   skip: function() {
     //done in editbar
     //actions.taskData(this.context.router.getCurrentParams().task);
-    this.state.carousels.carousel.goToSlide(0);
+    if (this.state.carousels.carousel) {
+      this.state.carousels.carousel.goToSlide(0);
+    }
   },
 
 
