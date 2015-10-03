@@ -49,7 +49,6 @@ module.exports = React.createClass({
     }
   },
 
-
   componentDidMount: function() {
 
     var map = L.map(this.state.id, this.props);
@@ -58,8 +57,8 @@ module.exports = React.createClass({
     map.scrollWheelZoom.disable();
 
     var tileUrl = '';
-    var maxNativeZoom = 13  ;
-    if(this.props.year == 2014){
+    var maxNativeZoom = 13;
+    if (this.props.year == 2014) {
       tileUrl = 'https://storage.googleapis.com/earthenginepartners-hansen/tiles/gfc2015/last_457/{z}/{x}/{y}.jpg';
       maxNativeZoom = 12;
     }else {
@@ -98,7 +97,7 @@ module.exports = React.createClass({
     var info = L.control({ position: 'topright' });
 
     var year = this.props.year;
-    if(year == '2000') year = '2000 or Earlier';
+    if (year == '2000') year = '2000 or Earlier';
     info.onAdd = function () {
       this._div = L.DomUtil.create('div', 'info');
       this._div.innerHTML = '<div class="map-title"><h2>' + year.toString() + '</h2></div>';
@@ -123,6 +122,9 @@ module.exports = React.createClass({
 
   componentDidUpdate: function(prevProps, prevState) {
 
+    if (prevProps.year != this.props.year) {
+      console.log("MAP IS CHANGING YEARS!!!");
+    }
     var center = this.props.center;
     var zoom = this.props.zoom;
     if (center && this.shouldUpdateCenter(center, prevProps.center)) {
@@ -142,12 +144,12 @@ module.exports = React.createClass({
 
   },
 
-  updateRoads: function(){
+  updateRoads: function() {
     this.removeRoads();
     this.drawRoads();
   },
 
-  removeRoads: function(){
+  removeRoads: function() {
     this.leafletElement.removeLayer(this.roadLinesLayer);
 
      if (this.taskLayer && this.taskLayer.getLayers()) {
@@ -158,7 +160,7 @@ module.exports = React.createClass({
     }
   },
 
-  drawRoads: function(){
+  drawRoads: function() {
     //draw the layers
       this.roadLinesLayer.addTo(this.leafletElement);
        if (this.state.map.mapData.length) {
@@ -180,9 +182,9 @@ module.exports = React.createClass({
   },
 
    mapRoadToggle: function(show) {
-     if(show){
+     if (show) {
        this.drawRoads();
-     }else{
+     } else {
        this.removeRoads();
 
      }
@@ -192,7 +194,7 @@ module.exports = React.createClass({
 
     //TODO: if task is verification, check if the new selection matches the old
     var year = this.props.year;
-    if(year == '2000') year = 'before 2000';
+    if (year == '2000') year = 'before 2000';
     this.state.map.iDEntity[0].tags.start_date = year;
 
     //prompt user for confirmation

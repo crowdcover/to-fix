@@ -357,7 +357,14 @@ text {
   .sidebar                { width:100%; }
   .sidebar.active ~ .main { width:0; left:100%; }
 
-  .instruction h1 {font-size: 15px;}
+  .instruction h1 {
+    font-size: 10px !important;
+width: 60%;
+text-align: center;
+margin-left: 12%;
+word-wrap: break-word;
+
+  }
 }
 
 /*  SECTIONS  */
@@ -405,4 +412,10 @@ text {
 @media only screen and (max-width: 480px) {
   .col {  }
   .span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4 { width: 100%; }
+  .slider, .slider-frame, .slider-list, .slider-slide,  .maps-section{
+    height: auto !important;
+  }
+  header nav {
+    width: 100% !important;
+  }
 }

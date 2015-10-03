@@ -13,12 +13,12 @@ var actions = require('../actions/actions');
 var config = require('../config');
 var qs = require('querystring');
 var xhr = require('xhr');
-var Map = require('./workspace/map');
 var MapStore = require('../stores/map_store');
 var UserStore = require('../stores/user_store');
-var BingLayer = require('../ext/bing.js');
+//var BingLayer = require('../ext/bing.js');
 var Carousel = require('nuka-carousel');
 var OnResize = require("react-window-mixins").OnResize;
+var Slide = require('./workspace/slide');
 
 var Editbar = require('./workspace/crowdsource_editbar');
 
@@ -37,6 +37,7 @@ module.exports = React.createClass({
     Reflux.connect(MapStore, 'map'),
     Reflux.connect(UserStore, 'user'),
     Reflux.listenTo(actions.taskSavedInOSM, 'fixed'),
+    Reflux.listenTo(actions.taskSkip, 'skip'),
     Reflux.listenTo(actions.mapPositionUpdate, 'geolocate'),
     Carousel.ControllerMixin,
     OnResize
@@ -50,12 +51,12 @@ module.exports = React.createClass({
 
   fixed: function() {
     actions.taskDone(this.context.router.getCurrentParams().task);
+    this.state.carousels.carousel.goToSlide.bind(null,0);
   },
 
   skip: function() {
-    // Set editor state as complete and trigger the done action
-    this.setState({ iDEdit: false });
     actions.taskData(this.context.router.getCurrentParams().task);
+    this.state.carousels.carousel.goToSlide.bind(null,0);
   },
 
 
@@ -91,12 +92,6 @@ module.exports = React.createClass({
       actions.taskEdit(this.context.router.getCurrentParams().task);
     }
   },
-
-  onResize: function() {
-   this.setState({
-     componentWidth: this.getDOMNode().clientWidth
-   });
- },
 
   render: function() {
 
@@ -136,90 +131,6 @@ module.exports = React.createClass({
         }),
         position: 'TopRight'
       }];
-      //TODO refactor this into multiple react components to clean it up
-    var slides = [];
-    var slideConfig = [];
-    if (this.state.window.width <= 480) {
-      slideConfig = [
-        [ //slide
-          ['2000'], //section
-          ['2001']
-        ],
-        [
-          ['2002'],
-          ['2003']
-        ],
-        [
-          ['2004'],
-          ['2005']
-        ],
-        [
-          ['2006'],
-          ['2007']
-        ],
-        [
-          ['2008'],
-          ['2009']
-        ],
-        [
-          ['2010'],
-          ['2011']
-        ],
-        [
-          ['2012'],
-          ['2013']
-        ],
-        [
-          ['2014']
-        ],
-      ]
-    } else {
-      slideConfig = [
-        [ //slide
-          ['2000','2001'], //section
-          ['2002', '2003']
-        ],
-        [
-          ['2004', '2005'],
-          ['2006', '2007']
-        ],
-        [
-          ['2008', '2009'],
-          ['2010', '2011']
-        ],
-        [
-          ['2012', '2013'],
-          ['2014']
-        ]
-      ]
-    }
-      slideConfig.forEach(function(slide) {
-
-        slides.push( (
-          <div className="slide" style={{height: '100%'}}>
-            <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
-              <h1>What year do you see the road?</h1>
-            </div>
-            {
-               slide.map(function (section) {
-                    return (
-                        <div className="section group col12">
-                          {
-                            section.map(function (year) {
-                              return (
-                                <div className="col6 span_2_of_4">
-                                  <Map year={year} />
-                                </div>
-                              );
-                            })
-                          }
-                        </div>
-                     );
-                })
-             }
-           </div>
-        ));
-      });
 
 
 
@@ -227,16 +138,13 @@ module.exports = React.createClass({
       <div style={{height: '100%'}}>
 
         <div className="maps-section" style={{height: '90%'}}>
-          <Carousel decorators={Decorators}>
-            {
-              slides.map(function (slide) {
-                return (
-                  {slide}
-                );
-              })
-            }
-
-
+          <Carousel decorators={Decorators}
+            ref="carousel"
+            data={this.setCarouselData.bind(this, 'carousel')}>
+            <Slide years={['2000','2001','2002','2003']} />
+            <Slide years={['2004','2005','2006','2007']} />
+            <Slide years={['2008','2009','2010','2011']} />
+            <Slide years={['2012','2013','2014']} />
           </Carousel>
         </div>
         <div className="editbar-container" style={{height: '10%'}}>

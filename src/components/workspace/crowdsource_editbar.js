@@ -100,7 +100,7 @@ module.exports = React.createClass({
           {taskActions}
           <div className='col6 pad2x center strong inline truncate'>
             Task: {taskTitle} {this.state.placename ? <span className='quiet icon marker'>{this.state.placename}</span> : ''}
-            <p>Feedback/Questions: Contact us at: <a href="mailto:info@loggingroads.org<">info@loggingroads.org</a></p>
+            <p>Feedback/Questions: <a href="mailto:info@loggingroads.org<">info@loggingroads.org</a></p>
 
           </div>
 
