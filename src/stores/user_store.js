@@ -129,12 +129,16 @@ module.exports = Reflux.createStore({
         // POST was successful, safe to call the callback.
         // Still attempt to close changeset, but ignore response because #2667
         // Add delay to allow for postgres replication #1646 #2678
-        window.setTimeout(function() { callback(null, changeset_id); }, 2500);
+        window.setTimeout(function() {
+          callback(null, changeset_id); 
+        }, 2500);
         auth.xhr({
           url: config.oauthUrl,
           method: 'PUT',
           path: '/api/0.6/changeset/' + changeset_id + '/close'
-        }, d3.functor(true));
+        }, function(err) {
+
+        });
       });
     });
   },

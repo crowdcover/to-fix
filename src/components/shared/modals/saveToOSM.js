@@ -21,7 +21,8 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      saving: false
+      saving: false,
+      comment: this.props.comment
     };
   },
 
@@ -37,17 +38,18 @@ module.exports = React.createClass({
 
 
   onSave: function(e) {
+    this.stopProp(e);
     this.setState({saving: true});
     var _this = this;
     //get the way object from the store
     var way = this.state.map.iDEntity[0];
     var comment = this.state.comment;
 
-    UserStore.putChangeset(way, comment, this.props.imageryUsed, function(err){
+    UserStore.putChangeset(way, comment, this.props.imageryUsed, function(err) {
       _this.setState({saving: false});
-      if(err){
+      if (err) {
         actions.errorDialog(err);
-      }else{
+      } else {
         //mark task as fixed
         actions.taskSavedInOSM();
       }
@@ -63,7 +65,7 @@ module.exports = React.createClass({
     e.nativeEvent.stopImmediatePropagation();
   },
 
-  componentDidMount: function(){
+  componentDidMount: function() {
     //if the user isn't logged in have them do that first
     if (!this.state.user || !this.state.user.auth) {
       actions.userLogin();
@@ -72,8 +74,7 @@ module.exports = React.createClass({
 
 
   render: function() {
-    this.state.comment = this.props.comment;
-    if(this.state.saving) {
+    if (this.state.saving) {
       return (
         <div id='modal' className='animate modal modal-content active' onClick={this.onCancel}>
           <div className='col4 modal-body fill-purple contain' onClick={this.stopProp}>
@@ -96,17 +97,16 @@ module.exports = React.createClass({
           <p className='dark'>{this.props.message}</p>
           </div>
 
-          <form className='dark' onSubmit={this.onSave}>
+          <div className='dark' >
           <fieldset className='pad2x'>
           <label>Comment</label>
           <input className='col12 block clean' ref='taskname' type='textarea' name='name' placeholder='Add a Comment' value={this.state.comment} />
           </fieldset>
 
-
           <div className='pad2x pad1y fill-light round-bottom col12 clearfix'>
-          <input className='col6 margin3 button' type='submit' value='Save to OSM' />
+            <button onClick={this.onSave} className='col6 margin3 button'>Save to OSM</button>
           </div>
-          </form>
+          </div>
 
         </div>
       </div>
