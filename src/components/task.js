@@ -18,6 +18,7 @@ var MapStore = require('../stores/map_store');
 var UserStore = require('../stores/user_store');
 var BingLayer = require('../ext/bing.js');
 var Carousel = require('nuka-carousel');
+var OnResize = require("react-window-mixins").OnResize;
 
 var Editbar = require('./workspace/crowdsource_editbar');
 
@@ -37,7 +38,8 @@ module.exports = React.createClass({
     Reflux.connect(UserStore, 'user'),
     Reflux.listenTo(actions.taskSavedInOSM, 'fixed'),
     Reflux.listenTo(actions.mapPositionUpdate, 'geolocate'),
-    Carousel.ControllerMixin
+    Carousel.ControllerMixin,
+    OnResize
   ],
 
   statics: {
@@ -90,6 +92,12 @@ module.exports = React.createClass({
     }
   },
 
+  onResize: function() {
+   this.setState({
+     componentWidth: this.getDOMNode().clientWidth
+   });
+ },
+
   render: function() {
 
     var style = {
@@ -128,6 +136,91 @@ module.exports = React.createClass({
         }),
         position: 'TopRight'
       }];
+      //TODO refactor this into multiple react components to clean it up
+    var slides = [];
+    var slideConfig = [];
+    if (this.state.window.width <= 480) {
+      slideConfig = [
+        [ //slide
+          ['2000'], //section
+          ['2001']
+        ],
+        [
+          ['2002'],
+          ['2003']
+        ],
+        [
+          ['2004'],
+          ['2005']
+        ],
+        [
+          ['2006'],
+          ['2007']
+        ],
+        [
+          ['2008'],
+          ['2009']
+        ],
+        [
+          ['2010'],
+          ['2011']
+        ],
+        [
+          ['2012'],
+          ['2013']
+        ],
+        [
+          ['2014']
+        ],
+      ]
+    } else {
+      slideConfig = [
+        [ //slide
+          ['2000','2001'], //section
+          ['2002', '2003']
+        ],
+        [
+          ['2004', '2005'],
+          ['2006', '2007']
+        ],
+        [
+          ['2008', '2009'],
+          ['2010', '2011']
+        ],
+        [
+          ['2012', '2013'],
+          ['2014']
+        ]
+      ]
+    }
+      slideConfig.forEach(function(slide) {
+
+        slides.push( (
+          <div className="slide" style={{height: '100%'}}>
+            <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
+              <h1>What year do you see the road?</h1>
+            </div>
+            {
+               slide.map(function (section) {
+                    return (
+                        <div className="section group col12">
+                          {
+                            section.map(function (year) {
+                              return (
+                                <div className="col6 span_2_of_4">
+                                  <Map year={year} />
+                                </div>
+                              );
+                            })
+                          }
+                        </div>
+                     );
+                })
+             }
+           </div>
+        ));
+      });
+
 
 
     return (
@@ -135,100 +228,15 @@ module.exports = React.createClass({
 
         <div className="maps-section" style={{height: '90%'}}>
           <Carousel decorators={Decorators}>
+            {
+              slides.map(function (slide) {
+                return (
+                  {slide}
+                );
+              })
+            }
 
 
-            <div className="slide" style={{height: '100%'}}>
-              <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
-                <h1>What year do you see the road?</h1>
-              </div>
-              <div style={{height: '95%'}}>
-                <div className="section group" >
-                  <div className="col span_2_of_4">
-                    <Map year="2000" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2001" />
-                  </div>
-                </div>
-                <div className="section group">
-                  <div className="col span_2_of_4">
-                    <Map year="2002" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2003" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="slide" style={{height: '100%'}}>
-              <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
-                <h1>What year do you see the road?</h1>
-              </div>
-              <div style={{height: '95%'}}>
-                <div className="section group" >
-                  <div className="col span_2_of_4">
-                    <Map year="2004" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2005" />
-                  </div>
-                </div>
-                <div className="section group">
-                  <div className="col span_2_of_4">
-                    <Map year="2006" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2007" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="slide" style={{height: '100%'}}>
-              <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
-                <h1>What year do you see the road?</h1>
-              </div>
-              <div style={{height: '95%'}}>
-                <div className="section group" >
-                  <div className="col span_2_of_4">
-                    <Map year="2008" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2009" />
-                  </div>
-                </div>
-                <div className="section group">
-                  <div className="col span_2_of_4">
-                    <Map year="2010" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2011" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="slide" style={{height: '100%'}}>
-              <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
-                <h1>What year do you see the road?</h1>
-              </div>
-              <div style={{height: '95%'}}>
-                <div className="section group" >
-                  <div className="col span_2_of_4">
-                    <Map year="2012" />
-                  </div>
-                  <div className="col span_2_of_4">
-                    <Map year="2013" />
-                  </div>
-                </div>
-                <div className="section group">
-                  <div className="col span_2_of_4">
-                    <Map year="2014" />
-                  </div>
-                  <div className="col span_2_of_4">
-
-                  </div>
-                </div>
-              </div>
-            </div>
           </Carousel>
         </div>
         <div className="editbar-container" style={{height: '10%'}}>

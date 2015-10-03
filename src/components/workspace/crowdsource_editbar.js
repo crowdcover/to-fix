@@ -83,7 +83,7 @@ module.exports = React.createClass({
     if (this.state.user && this.state.user.auth) {
       taskActions = (
         /* jshint ignore:start */
-        <div className='col12 clearfix center'>
+        <div className='col6 clearfix center'>
           {toggleRoads}
           <button onClick={this.skip} className='button round animate' style={{margin: 'auto auto'}}>Skip / Too Difficult</button>
         </div>
@@ -93,17 +93,17 @@ module.exports = React.createClass({
 
     return (
       /* jshint ignore:start */
-      <div className='crowdsource-editbar fill-lighten3 col12 center' style={{height: '100%'}}>
+      <div className='crowdsource-editbar col12 center' style={{height: '100%', backgroundColor: '#FFF'}}>
 
         <div className='col12' style={{height: '100%', paddingTop: '10px'}}>
 
           {taskActions}
-          <div className='col6 pad2x pad1y center strong inline truncate'>
+          <div className='col6 pad2x center strong inline truncate'>
             Task: {taskTitle} {this.state.placename ? <span className='quiet icon marker'>{this.state.placename}</span> : ''}
-          </div>
-          <div className='col6 pad2x pad1y center strong inline truncate'>
             <p>Feedback/Questions: Contact us at: <a href="mailto:info@loggingroads.org<">info@loggingroads.org</a></p>
+
           </div>
+
 
         </div>
 

@@ -1,10 +1,10 @@
 /* Base overrides
 ------------------------- */
 body {
-  font:13px/20px 'Helvetica Neue', Helvetica, sans-serif;
+  font:13px/20px 'Open Sans', Helvetica, sans-serif;
   color:rgba(0,0,0,0.75);
   }
-h1, h2, h3, h4, h5, h6,
+
 strong,
 svg,
 button,
@@ -14,8 +14,12 @@ input[type],
 label,
 form fieldset label,
 .button {
-  font-family:'Helvetica Neue', Helvetica, sans-serif;
+  font-family:'Open Sans', Helvetica, sans-serif;
   }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', sans-serif;
+	font-weight: 400;
+}
 .strong { font-weight:500; }
 strong { font-weight:bold}
 .tabs a,
@@ -37,6 +41,10 @@ h2 { padding-top:0; padding-bottom:0; }
    position:absolute;
    top: 40px;
    right: 10px;
+}
+
+.slider, .slider-frame, .slider-list, .slider-slide {
+  height: 100% !important;
 }
 
 .instruction p{
@@ -145,6 +153,7 @@ h2 { padding-top:0; padding-bottom:0; }
   -webkit-text-stroke: 1px black;
   color: white;
   font-size: 32px !important;
+  font-family:'Open Sans', Helvetica, sans-serif;
  }
 
 
@@ -337,13 +346,18 @@ text {
 
 /* Tablet Layout
 ------------------------- */
-@media only screen and (max-width:770px) {}
+@media only screen and (max-width:770px) {
+
+  .instruction h1 {font-size: 25px !important;}
+}
 
 /* Mobile Layout
 ------------------------- */
 @media only screen and (max-width:640px) {
   .sidebar                { width:100%; }
   .sidebar.active ~ .main { width:0; left:100%; }
+
+  .instruction h1 {font-size: 15px;}
 }
 
 /*  SECTIONS  */

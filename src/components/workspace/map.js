@@ -98,6 +98,7 @@ module.exports = React.createClass({
     var info = L.control({ position: 'topright' });
 
     var year = this.props.year;
+    if(year == '2000') year = '2000 or Earlier';
     info.onAdd = function () {
       this._div = L.DomUtil.create('div', 'info');
       this._div.innerHTML = '<div class="map-title"><h2>' + year.toString() + '</h2></div>';
