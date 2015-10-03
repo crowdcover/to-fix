@@ -146,7 +146,7 @@ module.exports = React.createClass({
 
   updateRoads: function() {
     this.removeRoads();
-    this.drawRoads();
+    this.drawRoads(true);
   },
 
   removeRoads: function() {
@@ -160,15 +160,20 @@ module.exports = React.createClass({
     }
   },
 
-  drawRoads: function() {
+  drawRoads: function(zoomToRoads) {
     //draw the layers
       this.roadLinesLayer.addTo(this.leafletElement);
        if (this.state.map.mapData.length) {
       this.state.map.mapData.forEach(function(xml) {
         var layer = new L.OSM.DataLayer(xml).addTo(this.taskLayer);
-        this.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
+        if (zoomToRoads) {
+          this.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
+        }
+
       }.bind(this));
-      this.leafletElement.setZoom(this.leafletElement.getZoom()-1, {animate: false});
+      if (zoomToRoads) {
+        this.leafletElement.setZoom(this.leafletElement.getZoom()-1, {animate: false});
+      }
     }
   },
 
@@ -183,7 +188,7 @@ module.exports = React.createClass({
 
    mapRoadToggle: function(show) {
      if (show) {
-       this.drawRoads();
+       this.drawRoads(false);
      } else {
        this.removeRoads();
 
