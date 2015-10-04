@@ -6,6 +6,7 @@ var actions = require('../../actions/actions');
 var UserStore = require('../../stores/user_store');
 var MapStore = require('../../stores/map_store');
 var taskObj = require('../../mixins/taskobj');
+var actions = require('../../actions/actions');
 
 module.exports = React.createClass({
   contextTypes: {
@@ -73,9 +74,16 @@ module.exports = React.createClass({
 
     var taskActions = (
       /* jshint ignore:start */
-      <div className='col12 clearfix center'>
-        {toggleRoads}
-        <a onClick={this.skip} className='button round animate'>Preview another task</a>
+      <div className='col6 clearfix center'>
+        <div className='col2 clearfix center'>
+          {toggleRoads}
+        </div>
+        <div className='col5 clearfix center'>
+          <a onClick={actions.userLogin} className='button round animate'>Get Started</a>        
+        </div>
+        <div className='col5 clearfix center'>
+          <a onClick={this.skip} className='button round animate'>Preview Another Task</a>
+        </div>
       </div>
       /* jshint ignore:end */
     );

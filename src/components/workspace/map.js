@@ -4,6 +4,7 @@ var React = require('react');
 var Reflux = require('reflux');
 var actions = require('../../actions/actions');
 var MapStore = require('../../stores/map_store');
+var UserStore = require('../../stores/user_store');
 var taskObj = require('../../mixins/taskobj');
 var uniqueId = require('lodash/utility/uniqueId');
 
@@ -17,6 +18,7 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(MapStore, 'map'),
+    Reflux.connect(UserStore, 'user'),
     Reflux.listenTo(actions.mapPositionUpdate, 'updatePosition'),
     Reflux.listenTo(actions.mapRoadToggle, 'mapRoadToggle')
   ],
@@ -108,9 +110,7 @@ module.exports = React.createClass({
 
     this.taskLayer = L.featureGroup().addTo(map);
 
-
-    this.leafletElement = map;
-    //this.setState({map: this.leafletElement, taskLayer: tasklayer});
+    this.setState({leafletElement: map});
   },
 
   shouldUpdateCenter: function(next, prev) {
@@ -121,19 +121,19 @@ module.exports = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-
     if (prevProps.year != this.props.year) {
       console.log("MAP IS CHANGING YEARS!!!");
     }
+    /*
     var center = this.props.center;
     var zoom = this.props.zoom;
     if (center && this.shouldUpdateCenter(center, prevProps.center)) {
-      this.leafletElement.setView(center, zoom, {animate: false});
+      this.state.leafletElement.setView(center, zoom, {animate: false});
     }
     else if (zoom && zoom !== prevProps.zoom) {
-      this.leafletElement.setZoom(zoom);
+      this.state.leafletElement.setZoom(zoom);
     }
-
+*/
 
     this.updateRoads();
 
@@ -150,7 +150,7 @@ module.exports = React.createClass({
   },
 
   removeRoads: function() {
-    this.leafletElement.removeLayer(this.roadLinesLayer);
+    this.state.leafletElement.removeLayer(this.roadLinesLayer);
 
      if (this.taskLayer && this.taskLayer.getLayers()) {
       var taskLayer = this.taskLayer;
@@ -162,27 +162,27 @@ module.exports = React.createClass({
 
   drawRoads: function(zoomToRoads) {
     //draw the layers
-      this.roadLinesLayer.addTo(this.leafletElement);
+      this.roadLinesLayer.addTo(this.state.leafletElement);
        if (this.state.map.mapData.length) {
       this.state.map.mapData.forEach(function(xml) {
         var layer = new L.OSM.DataLayer(xml).addTo(this.taskLayer);
         if (zoomToRoads) {
-          this.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
+          this.state.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
         }
 
       }.bind(this));
       if (zoomToRoads) {
-        this.leafletElement.setZoom(this.leafletElement.getZoom()-1, {animate: false});
+        this.state.leafletElement.setZoom(this.state.leafletElement.getZoom()-1, {animate: false});
       }
     }
   },
 
   componentWillUnmount: function() {
-    this.leafletElement.remove();
+    this.state.leafletElement.remove();
   },
 
   updatePosition: function() {
-    var map = this.leafletElement;
+    var map = this.state.leafletElement;
     map.setView(this.state.map.position.center, this.state.map.position.zoom, {animate: false});
   },
 
@@ -210,22 +210,13 @@ module.exports = React.createClass({
 
   render: function() {
 
-
-    var map = this.leafletElement;
-
-    var buttonText = 'Select';
-    /*
-    if(this.props.year == 2000){
-      buttonText += '2000 or before'
-    } else {
-        buttonText += this.props.year
-    }
-    */
+    var map = this.state.leafletElement;
 
     return (
       /* jshint ignore:start */
       <div id={this.state.id} className="mode map active fill-navy-dark">
-          <button onClick={this.select} className='select-year z1000 button round animate strong'>{buttonText}</button>
+        <button onClick={this.select} disabled={!this.state.user || !this.state.user.auth} className='select-year z1000 button round animate strong'>Select</button>
+
       </div>
       /* jshint ignore:end */
     );

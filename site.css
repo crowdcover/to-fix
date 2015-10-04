@@ -42,6 +42,9 @@ h2 { padding-top:0; padding-bottom:0; }
    top: 40px;
    right: 10px;
 }
+.select-year:disabled {
+  display: none;
+}
 
 .slider, .slider-frame, .slider-list, .slider-slide {
   height: 100% !important;
