@@ -7,6 +7,7 @@ var MapStore = require('../../stores/map_store');
 var UserStore = require('../../stores/user_store');
 var taskObj = require('../../mixins/taskobj');
 var uniqueId = require('lodash/utility/uniqueId');
+var _debounce = require('lodash.debounce');
 
 require('mapbox.js');
 require('leaflet-osm');
@@ -85,13 +86,25 @@ module.exports = React.createClass({
      // Record state in map
      map.on('move', function(e) {
        state.map.position.center = map.getCenter();
-      actions.mapPositionUpdate()
+       var debounced = _debounce(function() {
+         actions.mapPositionUpdate();
+       }, 20,{
+        'leading': true,
+        'trailing': false
+      });
+      debounced();
 
      });
 
     map.on('zoomend', function(e) {
       state.map.position.zoom = map.getZoom();
-      actions.mapPositionUpdate()
+      var debounced = _debounce(function() {
+        actions.mapPositionUpdate();
+      }, 20,{
+       'leading': true,
+       'trailing': false
+     });
+     debounced();
     });
 
 
