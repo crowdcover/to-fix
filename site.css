@@ -174,27 +174,27 @@ a.quiet{
 }
 
 a.quiet.active, a.quiet:hover {
-    color: RGBA(252, 124, 31, 1)
+    color: RGBA(252, 87, 75, 1)
 }
 
 button,
 .button,
 [type=button],
 [type=submit] {
-  background-color:#FC7C1F;
+  background-color:#FC574B;
   }
 button:hover,
 .button:hover,
 [type=button]:hover,
 [type=submit]:hover {
-  background-color:#F16405;
+  background-color:#d6483e;
   }
 
 .progress,
 header .button.active,
 header .button.active:hover,
-.fill-purple { background-color:#FC7C1F; }
-.area { fill:#FC7C1F; }
+.fill-purple { background-color:#FC574B; }
+.area { fill:#FC574B; }
 
 /* Components
 ------------------------- */
@@ -205,7 +205,7 @@ header .button.active:hover,
   }
 header .fancy.title {
   line-height:60px;
-  color:RGBA(252, 124, 31, 1);
+  color:RGBA(252, 87, 75, 1);
   }
 
 header .button {
@@ -213,7 +213,7 @@ header .button {
   color:rgba(255,255,255,0.8);
   }
   header .button:hover {
-    background-color:#FC7C1F;
+    background-color:#FC574B;
     color:rgba(0,0,0,0.75);
     }
   header .button.active {
