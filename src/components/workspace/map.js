@@ -139,29 +139,15 @@ module.exports = React.createClass({
     if (prevProps.year != this.props.year) {
       console.log("MAP IS CHANGING YEARS!!!");
     }
-    /*
-    var center = this.props.center;
-    var zoom = this.props.zoom;
-    if (center && this.shouldUpdateCenter(center, prevProps.center)) {
-      this.state.leafletElement.setView(center, zoom, {animate: false});
-    }
-    else if (zoom && zoom !== prevProps.zoom) {
-      this.state.leafletElement.setZoom(zoom);
-    }
-*/
-
     this.updateRoads();
-
-
-
-
-
-
   },
 
   updateRoads: function() {
     this.removeRoads();
-    this.drawRoads(true);
+    if(this.state.map.showRoads) {
+      this.drawRoads(false);
+    }
+
   },
 
   removeRoads: function() {
@@ -181,9 +167,7 @@ module.exports = React.createClass({
        if (this.state.map.mapData.length) {
       this.state.map.mapData.forEach(function(xml) {
         var layer = new L.OSM.DataLayer(xml).addTo(this.taskLayer);
-        if (zoomToRoads) {
-          this.state.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
-        }
+        this.state.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
 
       }.bind(this));
       if (zoomToRoads) {
@@ -199,7 +183,7 @@ module.exports = React.createClass({
   updatePosition: function() {
     var map = this.state.leafletElement;
     map.setView(this.state.map.position.center, this.state.map.position.zoom, {animate: false});
-  },
+    },
 
    mapRoadToggle: function(show) {
      if (show) {

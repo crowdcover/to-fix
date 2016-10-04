@@ -26,6 +26,7 @@ module.exports = Reflux.createStore({
         center: {},
         zoom: {}
       },
+      showRoads: true,
       baseLayer: store.get('baseLayer') ? store.get('baseLayer') : null
     };
     this.listenTo(actions.taskData, this.taskData);
@@ -34,29 +35,44 @@ module.exports = Reflux.createStore({
     this.listenTo(actions.taskSkip, this.taskSkip);
     this.listenTo(actions.taskEdit, this.taskEdit);
     this.listenTo(actions.taskNotError, this.taskNotError);
+    this.listenTo(actions.mapRoadToggle, this.mapRoadToggle);
   },
 
   getInitialState: function() {
     return this.data;
   },
 
+
+
   taskDone: function(task) {
+    var _this = this;
     postToTaskServer('fixed/' + task, {
       user: store.get('username'),
       key: this.data.key
     }, function(err, res) {
       if (err) return emitError(err);
-        this.taskData(task);
+        _this.taskData(task);
+        this.data.position = {
+          center: {},
+          zoom: {}
+        };
+        this.data.showRoads = true;
     }.bind(this));
   },
 
   taskNotError: function(task) {
+    var _this = this;
     postToTaskServer('noterror/' + task, {
       user: store.get('username'),
       key: this.data.key
     }, function(err, res) {
       if (err) return emitError(err);
-        this.taskData(task);
+        _this.taskData(task);
+        this.data.position = {
+          center: {},
+          zoom: {}
+        };
+        this.data.showRoads = true;
     }.bind(this));
   },
 
@@ -171,6 +187,12 @@ module.exports = Reflux.createStore({
       action: 'skip',
       key: this.data.key
     });
+
+    this.data.showRoads = true;
+  },
+
+  mapRoadToggle: function(showRoads) {
+    this.data.showRoads = showRoads;
   },
 
   taskEdit: function(task) {
