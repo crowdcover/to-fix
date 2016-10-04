@@ -312,8 +312,8 @@ header .button {
 
 .leaflet-clickable {
   fill:transparent;
-  stroke-opacity:0.2;
-  stroke:#FF1F7C;
+  stroke-opacity:0.25;
+  stroke:#FC574B;
   stroke-width: 20;
   }
 
