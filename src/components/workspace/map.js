@@ -64,6 +64,8 @@ module.exports = React.createClass({
     if (this.props.year == 2014) {
       tileUrl = 'https://storage.googleapis.com/earthenginepartners-hansen/tiles/gfc2015/last_457/{z}/{x}/{y}.jpg';
       maxNativeZoom = 12;
+    }else if (this.props.year == 2015 || this.props.year == 2016) {
+      tileUrl = 'https://storage.googleapis.com/wri-tiles/landsat/' + this.props.year.toString() + '/{z}/{x}/{y}.png';
     }else {
       tileUrl = 'https://wri-tiles.s3.amazonaws.com/umd_landsat/' + this.props.year.toString() + '/{z}/{y}/{x}.png';
     }

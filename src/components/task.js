@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 var omnivore = require('leaflet-omnivore');
 var wellknown = require('wellknown');
 
@@ -63,6 +61,7 @@ module.exports = React.createClass({
     if (this.state.carousels.carousel) {
       this.state.carousels.carousel.goToSlide(0);
     }
+    
   },
 
 
@@ -150,7 +149,8 @@ module.exports = React.createClass({
             <Slide years={['2000','2001','2002','2003']} />
             <Slide years={['2004','2005','2006','2007']} />
             <Slide years={['2008','2009','2010','2011']} />
-            <Slide years={['2012','2013','2014']} />
+            <Slide years={['2012','2013','2014', '2015']} />
+            <Slide years={['2016']} />
           </Carousel>
         </div>
         <div className="editbar-container" style={{height: '10%'}}>
@@ -160,46 +160,3 @@ module.exports = React.createClass({
     )
   }
 });
-
-/*
-<div className="section group">
-  <div className="col span_1_of_4">
-    <Map year="2004" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2005" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2006" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2007" />
-  </div>
-</div>
-<div className="section group">
-  <div className="col span_1_of_4">
-    <Map year="2008" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2009" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2010" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2011" />
-  </div>
-</div>
-<div className="section group">
-  <div className="col span_1_of_4">
-    <Map year="2012" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2013" />
-  </div>
-  <div className="col span_1_of_4">
-    <Map year="2014" />
-  </div>
-</div>
-
-*/
