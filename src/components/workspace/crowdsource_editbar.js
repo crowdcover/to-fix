@@ -30,6 +30,7 @@ module.exports = React.createClass({
 
   edit: function() {
     actions.taskEdit(this.context.router.getCurrentParams().task);
+    this.setState({showRoads: true});
   },
 
   noterror: function() {
@@ -40,11 +41,13 @@ module.exports = React.createClass({
     var task = this.context.router.getCurrentParams().task;
     actions.taskData(task);
     actions.taskSkip(task);
+    this.setState({showRoads: true});
   },
 
 
   geolocate: function(placename) {
     this.setState({
+      showRoads: true,
       placename: placename
     });
   },
