@@ -126,14 +126,13 @@ module.exports = React.createClass({
 
     this.setState({leafletElement: map});
 
-    if(this.state.map.mapData.length > 0) {
-      this.drawRoads(true);
-    }
-
+    this.mounted = true;
   },
 
   osmDataLoaded: function() {
-    this.drawRoads(true);
+    if(this.mounted) {
+        this.drawRoads(true);
+    }
   },
 
   shouldUpdateCenter: function(next, prev) {
