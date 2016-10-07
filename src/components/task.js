@@ -61,7 +61,7 @@ module.exports = React.createClass({
     if (this.state.carousels.carousel) {
       this.state.carousels.carousel.goToSlide(0);
     }
-    
+
   },
 
 
@@ -107,9 +107,7 @@ module.exports = React.createClass({
       padding: '10px',
       outline: 0,
       opacity: 1,
-      cursor: 'pointer',
-      marginLeft: '90px',
-      marginRight: '90px'
+      cursor: 'pointer'
     };
 
       var Decorators = [{
@@ -143,8 +141,10 @@ module.exports = React.createClass({
 
     return (
       <div style={{height: '100%'}}>
-
-        <div className="maps-section" style={{height: '90%'}}>
+        <div className="instruction center" style={{height: '40px', minHeight: '40px', backgroundColor: '#FFF'}}>
+          <h1>What year do you see the road?</h1>
+        </div>
+        <div className="maps-section" style={{height: 'calc(100% - 102px)'}}>
           <Carousel decorators={Decorators}
             ref="carousel"
             data={this.setCarouselData.bind(this, 'carousel')}>

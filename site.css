@@ -341,6 +341,11 @@ text {
   }
 
 
+  .slider-decorator-0, .slider-decorator-1 {
+    top: -39px !important;
+  }
+
+
 /* Small Screen Layout
 ------------------------- */
 @media only screen and (max-width:900px) {

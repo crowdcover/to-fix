@@ -47,9 +47,7 @@ module.exports = React.createClass({
 
     return (
       <div className="slide" style={{height: '100%'}}>
-        <div className="instruction center" style={{height: '5%', minHeight: '40px', backgroundColor: '#FFF'}}>
-          <h1>What year do you see the road?</h1>
-        </div>
+        
         {section1}
         {section2}
       </div>
