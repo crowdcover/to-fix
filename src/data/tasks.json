@@ -1,7 +1,23 @@
 {
   "tasks": [{
+    "id": "drcmissingstartdates",
+    "title": "DRC - Missing Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "rocmissingstartdates",
+    "title": "Rep. of Congo - Missing Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "cameroonmissingstartdates",
+    "title": "Cameroon - Missing Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "gabonmissingstartdates",
+    "title": "Gabon - Missing Start Dates",
+    "source": "loggingroads"
+  },{
     "id": "loggingroadstartdates",
-    "title": "Logging Road Start Dates",
+    "title": "Archived - Logging Road Start Dates",
     "source": "loggingroads"
   }]
 }
