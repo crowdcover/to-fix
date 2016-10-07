@@ -16,8 +16,28 @@
     "title": "Gabon - Missing Start Dates",
     "source": "loggingroads"
   },{
+    "id": "toupdates",
+    "title": "2014 - 2016 Updates",
+    "source": "loggingroads"
+  },{
+    "id": "drcinaccurate",
+    "title": "DRC - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "rocinaccurate",
+    "title": "Rep. of Congo - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "camerooninaccurate",
+    "title": "Cameroon - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "gaboninaccurate",
+    "title": "Gabon - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
     "id": "loggingroadstartdates",
-    "title": "Archived - Logging Road Start Dates",
+    "title": "Archived (Do Not Use) - Logging Road Start Dates",
     "source": "loggingroads"
   }]
 }
