@@ -107,7 +107,9 @@ module.exports = React.createClass({
       padding: '10px',
       outline: 0,
       opacity: 1,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      marginLeft: '90px',
+      marginRight: '90px'
     };
 
       var Decorators = [{
