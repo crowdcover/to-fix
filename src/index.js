@@ -9,14 +9,14 @@ var Router = require('react-router');
 var Routes = require('./routes');
 var config = require('./config');
 var auth = require('./mixins/auth');
-var Raven = require('raven-js');
+//var Raven = require('raven-js');
 
 var userStore = require('./stores/user_store.js');
-
+/*
 Raven.config(config.raven, {
   whitelistUrls: ['osmlab.github.io/to-fix/']
 }).install();
-
+*/
 function doAsync(routes, params) {
   var _this = this;
 

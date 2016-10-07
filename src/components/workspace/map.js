@@ -35,7 +35,6 @@ module.exports = React.createClass({
     minZoom: React.PropTypes.number,
     style: React.PropTypes.object,
     zoom: React.PropTypes.number,
-    keyboard: React.PropTypes.bool,
     year: React.PropTypes.string
   },
 
@@ -48,8 +47,7 @@ module.exports = React.createClass({
   getDefaultProps() {
     return {
       maxZoom: 18,
-      minZoom: 5,
-      keyboard: false
+      minZoom: 5
     }
   },
 
@@ -168,7 +166,7 @@ module.exports = React.createClass({
     }
   },
 
-  drawRoads: function(zoomToRoads) {
+    drawRoads: function(zoomToRoads) {
     //draw the layers
       this.roadLinesLayer.addTo(this.state.leafletElement);
        if (this.state.map.mapData.length) {

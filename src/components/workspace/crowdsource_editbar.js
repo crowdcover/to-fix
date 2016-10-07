@@ -77,7 +77,7 @@ module.exports = React.createClass({
 
     var toggleRoads = (
       <div className="toggle-roads">
-        <Radio
+        <Radio label=""
           options={{"Show Roads": this.state.showRoads,"Hide Roads": !this.state.showRoads}}
           onChange={this.toggleRoads}/>
        </div>
