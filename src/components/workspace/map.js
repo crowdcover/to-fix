@@ -21,7 +21,8 @@ module.exports = React.createClass({
     Reflux.connect(MapStore, 'map'),
     Reflux.connect(UserStore, 'user'),
     Reflux.listenTo(actions.mapPositionUpdate, 'updatePosition'),
-    Reflux.listenTo(actions.mapRoadToggle, 'mapRoadToggle')
+    Reflux.listenTo(actions.mapRoadToggle, 'mapRoadToggle'),
+    Reflux.listenTo(actions.osmDataLoaded, 'osmDataLoaded')
   ],
 
 
@@ -126,6 +127,15 @@ module.exports = React.createClass({
     this.taskLayer = L.featureGroup().addTo(map);
 
     this.setState({leafletElement: map});
+
+    if(this.state.map.mapData.length > 0) {
+      this.drawRoads(true);
+    }
+
+  },
+
+  osmDataLoaded: function() {
+    this.drawRoads(true);
   },
 
   shouldUpdateCenter: function(next, prev) {
@@ -139,16 +149,13 @@ module.exports = React.createClass({
     if (prevProps.year != this.props.year) {
       console.log("MAP IS CHANGING YEARS!!!");
     }
-    this.updateRoads();
-  },
 
-  updateRoads: function() {
-    this.removeRoads();
-    if(this.state.map.showRoads) {
-      this.drawRoads(false);
+    if(prevState.map.showRoads !== this.state.map.showRoads) {
+      this.removeRoads();
+      this.drawRoads(true);
     }
-
   },
+
 
   removeRoads: function() {
     this.state.leafletElement.removeLayer(this.roadLinesLayer);
@@ -167,8 +174,9 @@ module.exports = React.createClass({
        if (this.state.map.mapData.length) {
       this.state.map.mapData.forEach(function(xml) {
         var layer = new L.OSM.DataLayer(xml).addTo(this.taskLayer);
-        this.state.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
-
+        if (zoomToRoads) {
+          this.state.leafletElement.fitBounds(layer.getBounds(), { reset: false, animate: false });
+        }
       }.bind(this));
       if (zoomToRoads) {
         this.state.leafletElement.setZoom(this.state.leafletElement.getZoom()-1, {animate: false});

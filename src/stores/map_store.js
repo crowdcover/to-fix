@@ -96,6 +96,7 @@ module.exports = Reflux.createStore({
               return _this.taskDone(task.id);
             }
             _this.trigger(_this.data);
+            actions.osmDataLoaded();
           });
           break;
       }
