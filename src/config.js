@@ -8,7 +8,7 @@ module.exports.bing = 'AoSLxc7XEVWEvXRDBH0cORiz81J8qIXnRF-8EaKcWVosAJM6EMw7G8sbp
 module.exports.oauthUrl = 'https://www.openstreetmap.org';
 module.exports.osmApi = 'https://www.openstreetmap.org/api/0.6/';
 
-module.exports.taskServer = 'http://loggingroads.org:8000/';
+module.exports.taskServer = 'http://fix.loggingroads.org:8000/';
 
 module.exports.josm = 'http://localhost:8111/load_and_zoom?';
 module.exports.iD = 'http://id.loggingroads.org/#';
