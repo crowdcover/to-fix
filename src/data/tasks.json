@@ -4,7 +4,7 @@
     "title": "DRC - Logging Roads",
     "source": "loggingroads"
   },{
-    "id": "drcpublicoads",
+    "id": "drcpublicroads",
     "title": "DRC - Public Roads",
     "source": "loggingroads"
   },{
@@ -12,7 +12,7 @@
     "title": "DRC - Inaccurate Start Dates",
     "source": "loggingroads"
   },{
-    "id": "rocloggingroads",
+    "id": "rocloggingroadsroads",
     "title": "ROC - Logging Roads",
     "source": "loggingroads"
   },{
