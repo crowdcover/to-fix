@@ -1,55 +1,71 @@
 {
   "tasks": [{
-    "id": "drcmissingstartdates",
-    "title": "DRC - Missing Start Dates",
+    "id": "drcloggingroads",
+    "title": "DRC - Logging Roads",
     "source": "loggingroads"
   },{
-    "id": "rocmissingstartdates",
-    "title": "Rep. of Congo - Missing Start Dates",
-    "source": "loggingroads"
-  },{
-    "id": "cameroonmissingstartdates",
-    "title": "Cameroon - Missing Start Dates",
-    "source": "loggingroads"
-  },{
-    "id": "gabonmissingstartdates",
-    "title": "Gabon - Missing Start Dates",
-    "source": "loggingroads"
-  },{
-    "id": "egmissingstartdates",
-    "title": "Equatorial Guinea - Missing Start Dates",
-    "source": "loggingroads"
-  },{
-    "id": "toupdates",
-    "title": "2014 - 2016 Updates",
+    "id": "drcpublicoads",
+    "title": "DRC - Public Roads",
     "source": "loggingroads"
   },{
     "id": "drcinaccurate",
     "title": "DRC - Inaccurate Start Dates",
     "source": "loggingroads"
   },{
+    "id": "rocloggingroads",
+    "title": "ROC - Logging Roads",
+    "source": "loggingroads"
+  },{
+    "id": "rocpublicroads",
+    "title": "ROC - public Roads",
+    "source": "loggingroads"
+  },{
     "id": "rocinaccurate",
-    "title": "Rep. of Congo - Inaccurate Start Dates",
+    "title": "ROC - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "cameroonmissingstartdates",
+    "title": "CMR- Missing Start Dates",
     "source": "loggingroads"
   },{
     "id": "camerooninaccurate",
-    "title": "Cameroon - Inaccurate Start Dates",
+    "title": "CMR - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "gabonmissingstartdates",
+    "title": "GAB - Missing Start Dates",
     "source": "loggingroads"
   },{
     "id": "gaboninaccurate",
-    "title": "Gabon - Inaccurate Start Dates",
+    "title": "GAB - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "egmissingstartdates",
+    "title": "GNQ - Missing Start Dates",
     "source": "loggingroads"
   },{
     "id": "eginaccurate",
-    "title": "Equatorial Guinea - Inaccurate Start Dates",
+    "title": "GNQ - Inaccurate Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "toupdates",
+    "title": "2014 - 2016 Updates",
     "source": "loggingroads"
   },{
     "id": "rocminorroads",
-    "title": "Rep. of Congo - Minor Roads",
+    "title": "Archived (Do Not Use) Rep. of Congo - Minor Roads",
     "source": "loggingroads"
   },{
     "id": "rocothertracks",
-    "title": "Rep. of Congo - Other Tracks",
+    "title": "Archived (Do Not Use) Rep. of Congo - Other Tracks",
+    "source": "loggingroads"
+  },{
+    "id": "drcmissingstartdates",
+    "title": "Archived (Do Not Use) DRC - Missing Start Dates",
+    "source": "loggingroads"
+  },{
+    "id": "rocmissingstartdates",
+    "title": "Archived (Do Not Use) Rep. of Congo - Missing Start Dates",
     "source": "loggingroads"
   },{
     "id": "loggingroadstartdates",
@@ -57,3 +73,4 @@
     "source": "loggingroads"
   }]
 }
+
