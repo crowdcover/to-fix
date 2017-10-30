@@ -1,10 +1,10 @@
 {
   "tasks": [{
-    "id": "drcloggingroads",
+    "id": "drcloggingroadsnostart",
     "title": "DRC - Logging Roads",
     "source": "loggingroads"
   },{
-    "id": "drcpublicroads",
+    "id": "drcpublicroadsnostart",
     "title": "DRC - Public Roads",
     "source": "loggingroads"
   },{
@@ -12,11 +12,11 @@
     "title": "DRC - Inaccurate Start Dates",
     "source": "loggingroads"
   },{
-    "id": "rocloggingroadsroads",
+    "id": "cogloggingroadsnostart",
     "title": "ROC - Logging Roads",
     "source": "loggingroads"
   },{
-    "id": "rocpublicroads",
+    "id": "cogpublicroadsnostart",
     "title": "ROC - Public Roads",
     "source": "loggingroads"
   },{
